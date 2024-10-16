@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head>
+    <title>  | Coverage - A Metric for Test Suite Quality </title>
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.74.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="Coverage - A Metric for Test Suite Quality">
+    
+    <link rel="stylesheet" href="../../css/style.min.e93575d7ce4df83c7a9af72ec12e9a136620fe36031c57c52ba99762ae705d53.css" integrity="sha256-6TV1185N&#43;Dx6mvcuwS6aE2Yg/jYDHFfFK6mXYq5wXVM=" crossorigin="anonymous" type="text/css"><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+    <link rel="shortcut icon" href="https://www.elizabethdinella.github.io/favicons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.elizabethdinella.github.io/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.elizabethdinella.github.io/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.elizabethdinella.github.io/favicons/favicon-16x16.png">
+    <link rel="canonical" href="https://www.elizabethdinella.github.io/blog-posts/randoop/">
+    
+    
+    <script type="text/javascript" src="https://www.elizabethdinella.github.io/js/anatole-header.min.7e2fc0724240b28c6e214687e73a4a6eb6c196bbace546b9dc86e94cca120b5c.js" integrity="sha256-fi/AckJAsoxuIUaH5zpKbrbBlrus5Ua53IbpTMoSC1w=" crossorigin="anonymous"></script>
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.elizabethdinella.github.io/images/site-feature-image.png"/>
+
+<meta name="twitter:title" content="Testing Classes and Libraries with Randoop"/>
+<meta name="twitter:description" content="Tests are an important and valuable part of the software development cycle."/>
+
+</head><body><div class="sidebar animated fadeInDown">
+    <div class="logo-title">
+      <div class="title">
+	      <!-- <img src="https://www.elizabethdinella.github.io/images/image.png" alt="profile picture"> -->
+        <h3 title=""><a href="/">Elizabeth Dinella</a></h3>
+        <div class="description">
+          <p>Assistant Professor <br>
+        Bryn Mawr College  
+</p>
+        </div>
+      </div>
+    </div>
+    <ul class="social-links">
+        <li>
+        <a href="https://scholar.google.com/citations?user=DxQ4wV0AAAAJ&hl=en&oi=ao" rel="me" aria-label="google scholar">
+          <i class="fa fa-2x fa-graduation-cap" aria-hidden="true"></i>
+        </a> 
+        </li>
+
+        
+        <li>
+        <a href="https://www.linkedin.com/in/elizabeth-dinella-154772102/" rel="me" aria-label="Linkedin">
+          <i class="fa fa-2x fa-linkedin" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://twitter.com/eadinella" rel="me" aria-label="Twitter">
+          <i class="fa fa-2x fa-twitter" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://github.com/elizabethdinella" rel="me" aria-label="GitHub">
+          <i class="fa fa-2x fa-github" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="mailto:edinella@brynmawr.edu" rel="me" aria-label="e-mail">
+          <i class="fa fa-2x fa-envelope" aria-hidden="true"></i>
+        </a>          
+        </li>
+    </ul>
+    <div class="footer">
+        
+      </div>
+    </div>
+</div>
+<div class="main">
+            <div class="page-top animated fadeInDown">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    <ul class="nav" id="navMenu">
+        
+        
+        
+        <li><a  href="https://elizabethdinella.github.io"  title="">About Me</a></li>
+        
+        
+        <li><a  href="https://elizabethdinella.github.io/blog-posts/"  title="">Blog Posts</a></li>
+        
+        
+        <li class="theme-switch-item">
+		
+        </li>
+    </ul>
+</div>
+
+            <div class="autopagerize_page_element">
+                <div class="content">
+<div class="post animated fadeInDown">
+    <div class="post-content">
+
+      <div class="post-title">
+        <h3>Coverage - A Metric for Test Suite Quality
+        </h3>
+        
+        </div>
+
+        <p> 
+        In CS151, I grade students’ JUnit test suites based on an automatically collected metric called coverage. The intuition behind code coverage is: untested parts of the code may still contain faults. If your test suite doesn’t execute certain sections of the program, potential mistakes in those areas can go undetected. </p>
+
+        <p> Coverage is a metric which measures the degree to which the source code of a program is executed when a particular test suite is run. A program with high code coverage has more of its source code executed during testing, which suggests it has a lower chance of containing undetected software bugs compared to a program with low code coverage. </p>
+
+        <p> Code coverage is a widely respected test quality metric, and achieving high coverage is required in many industries. For example, test suites and their coverage percentages are required to be submitted to the Federal Aviation Administration under airborne software safety laws. However, you will see that code coverage is not a perfect measure of correctness. A test suite with 100% coverage can still miss bugs, as it does not guarantee that all edge cases or logic flaws are exercised. </p>
+
+        <p> In this reading, we will learn how to measure code coverage using Jacoco. I will introduce different kinds of coverage and illustrate their strengths and weaknesses. My goal is for you to use this information as a tool to improve your test suites and code quality, while tempering the false sense of security that coverage alone can provide. All code and scripts discussed are available at: <a href="https://github.com/elizabethdinella/code-coverage"> https://github.com/elizabethdinella/code-coverage</a>
+</p>
+
+<p>
+Consider the following running example for calculating a ticket price to an event. The ticket price is discounted if you buy in advance. It applies a time-based discount proportional to the days until the event. For example, on a $150 ticket, buying a ticket 10 days before the event will apply a 20% discount while buying a ticket 1 day before the event will apply a 2% discount. A further 10% discount is applied if the customer is a member. Lastly, ticket price is also discounted for senior citizens (65+) and minors (under 18). This discount is also proportional. A 75 year old customer will receive a 20% discount on a $150 ticket while an 85 year old customer will receive a 40% discount. </p>
+
+<code> 
+public class BuyTicket {
+    /**
+     * Calculates discount based on customer age and number of days until event
+     * @param basePrice Base price of the ticket without any discount
+     * @param daysUntilEvent Number of days remaining until the event day
+     * @param customerAge Age of the customer
+     * @param isMember Boolean indicating if the custsomer is a member
+     * @return ticket price discounted based on number of days remaining and potential age and membership discount
+     */
+
+    public static double calculatePrice(int basePrice, int daysUntilEvent, int customerAge, boolean isMember) {
+        double maxDiscount = basePrice - 100;
+
+        double discountRate = daysUntilEvent / maxDiscount; // BUG 1: potential division by zero
+        
+        if (isMember) discountRate += .10;
+
+        if (customerAge >= 65 || customerAge < 18) {
+            discountRate += (customerAge - 65) / maxDiscount; //BUG 2: customerAge < 18 gives negative discount
+        }
+
+        return basePrice - (basePrice * discountRate);
+    }
+}
+</code>
+
+<!-- <p>First, use <code>javac</code> to compile the Java files to class files:</p>
+<pre><code>$ javac Line.java Parabola.java Point.java Vector.java
+</code></pre><p>If the compilation was successful, you should see <code>.class</code> files for each Java program.</p>
+<p>Now, let’s make a list of the class files we would like Randoop to target. Add the prefix of each of our Java files to a text file.</p>
+<pre><code>$ cat myclasses.txt
+Line
+Parabola
+Point
+Vector
+</code></pre><p>Now we are ready to use Randoop! Generate tests using the following command:</p>
+<pre><code>$ java -classpath {my_dir}:./randoop-all-3.0.8.jar randoop.main.Main gentests --classlist=myclasses.txt --no-regression-tests=true
+</code></pre><p>Specifying the location of resources needed to run Randoop can be tricky. The easiest way to accomplish this is to run the command to execute Randoop in the directory where you downloaded the library source code with the classpath option.</p>
+<p>You should see <code>ErrorTest*.Java</code> files containing the failing test cases. Let’s open <code>ErrorTest0.Java</code> to see the failing method sequences Randoop has generated.</p>
+<p>Of course, Randoop is randomized, so each reader’s <code>ErrorTest</code> file may look different. However, you should see failing test cases regarding the reflexivity and transitivity of equals on various library objects.</p>
+<p>Let’s compile and run these tests to see the crashes.</p>
+<p>Compile the tests using the following command:</p>
+<pre><code>$ javac -classpath .:{my_dir}/junit-4.12.jar ErrorTest*.java -sourcepath .:{my_dir}
+</code></pre><p>In order to run the tests, it makes things easier to create an environment variable to refer to the necessary jar files:</p>
+<pre><code>$ export JUNITPATH=junit-4.12.jar:hamcrest-core-1.3.jar
+</code></pre><p>Now, we are ready to run the failing test cases:</p>
+<pre><code>$ java -classpath .:$JUNITPATH:{my_dir} org.junit.runner.JUnitCore ErrorTest
+</code></pre><p>You should see various errors including Class Cast Exceptions, and Null Pointer Exceptions. Each of these failing test cases should have a stack trace specifying the location in the corresponding library files.</p>
+<p>Let’s inspect the stack traces and fix some of these errors.</p>
+<p>Randoop generates sequences of methods using a feedback loop. It starts with a short sequence and continues to expand with method calls from the input class in each iteration. If the sequence is illegal or redundant it is thrown away and not expanded upon. So, it makes sense to start fixing errors with the smallest sequence first.</p>
+<p>In this run of Randoop, the first failing test, <code>test001</code>, is:</p>
+<pre style='color:#d1d1d1;background:#000000;'>  <span style='color:#8695b8; font-weight:bold; '>@Test</span>
+  <span style='color:#e66170; font-weight:bold; '>public</span> void test001() <span style='color:#e66170; font-weight:bold; '>throws</span> Throwable <span style='color:#b060b0; '>{</span>
+	Point point0 <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>null</span><span style='color:#b060b0; '>;</span>
+	Point point1 <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>null</span><span style='color:#b060b0; '>;</span>
+	Line line2 <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>new</span> Line<span style='color:#d2cd86; '>(</span>point0<span style='color:#d2cd86; '>,</span> point1<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+    
+	<span style='color:#9999a9; '>// Checks the contract:  line2.equals(line2)</span>
+	org<span style='color:#d2cd86; '>.</span>junit<span style='color:#d2cd86; '>.</span>Assert<span style='color:#d2cd86; '>.</span>assertTrue<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>"Contract failed: line2.equals(line2)"</span><span style='color:#d2cd86; '>,</span> line2<span style='color:#d2cd86; '>.</span>equals<span style='color:#d2cd86; '>(</span>line2<span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+  <span style='color:#b060b0; '>}</span>
+</pre>
+<p>With the crashing stack trace:</p>
+<pre style="color:#d1d1d1;background:#000000;">java<span style="color:#d2cd86; ">.</span>lang<span style="color:#d2cd86; ">.</span>AssertionError<span style="color:#d2cd86; ">:</span> Contract failed<span style="color:#d2cd86; ">:</span> line2<span style="color:#d2cd86; ">.</span>equals<span style="color:#d2cd86; ">(</span>line2<span style="color:#d2cd86; ">)</span>
+    at org<span style="color:#d2cd86; ">.</span>junit<span style="color:#d2cd86; ">.</span>Assert<span style="color:#d2cd86; ">.</span>fail<span style="color:#d2cd86; ">(</span>Assert<span style="color:#d2cd86; ">.</span>java<span style="color:#d2cd86; ">:</span><span style="color:#008c00; ">88</span><span style="color:#d2cd86; ">)</span>
+    at org<span style="color:#d2cd86; ">.</span>junit<span style="color:#d2cd86; ">.</span>Assert<span style="color:#d2cd86; ">.</span>assertTrue<span style="color:#d2cd86; ">(</span>Assert<span style="color:#d2cd86; ">.</span>java<span style="color:#d2cd86; ">:</span><span style="color:#008c00; ">41</span><span style="color:#d2cd86; ">)</span>
+    at ErrorTest0<span style="color:#d2cd86; ">.</span>test001<span style="color:#d2cd86; ">(</span>ErrorTest0<span style="color:#d2cd86; ">.</span>java<span style="color:#d2cd86; ">:</span><span style="color:#008c00; ">21</span><span style="color:#d2cd86; ">)</span>
+    at java<span style="color:#d2cd86; ">.</span>base<span style="color:#d2cd86; ">/</span>jdk<span style="color:#d2cd86; ">.</span>internal<span style="color:#d2cd86; ">.</span>reflect<span style="color:#d2cd86; ">.</span>NativeMethodAccessorImpl<span style="color:#d2cd86; ">.</span>invoke0<span style="color:#d2cd86; ">(</span>Native Method<span style="color:#d2cd86; ">)</span>
+<span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span>
+</pre>
+<p>Because this test case is so small, we can deduce that the error is likely in the <code>Line</code> constructor:</p>
+<pre style="color:#d1d1d1;background:#000000;"><span style="color:#e66170; font-weight:bold; ">public</span> Line(Point p1, Point p2)
+<span style="color:#b060b0; ">{</span>
+   	 <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span>p1 <span style="color:#d2cd86; ">!</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span>
+   	 <span style="color:#b060b0; ">{</span>
+   		 <span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>point1 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Point<span style="color:#d2cd86; ">(</span>p1<span style="color:#d2cd86; ">.</span>x<span style="color:#d2cd86; ">,</span>p1<span style="color:#d2cd86; ">.</span>y<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+   	 <span style="color:#b060b0; ">}</span>
+   	 <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span>p2 <span style="color:#d2cd86; ">!</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span>
+   	 <span style="color:#b060b0; ">{</span>
+   		 <span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>point2 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Point<span style="color:#d2cd86; ">(</span>p2<span style="color:#d2cd86; ">.</span>x<span style="color:#d2cd86; ">,</span>p2<span style="color:#d2cd86; ">.</span>y<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+   	 <span style="color:#b060b0; ">}</span>
+<span style="color:#b060b0; ">}</span>
+</pre>
+<p>In particular, the crashing test case occurs when the <code>Points</code> p1 and p2 are null. Fix the <code>Line</code> constructor to handle null <code>Points</code> by removing the if statements. We now have:</p>
+<pre style="color:#d1d1d1;background:#000000;"><span style="color:#e66170; font-weight:bold; ">public</span> Line(Point p1, Point p2)
+<span style="color:#b060b0; ">{</span>
+   	<span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>point1 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Point<span style="color:#d2cd86; ">(</span>p1<span style="color:#d2cd86; ">.</span>x<span style="color:#d2cd86; ">,</span>p1<span style="color:#d2cd86; ">.</span>y<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+   	<span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>point2 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Point<span style="color:#d2cd86; ">(</span>p2<span style="color:#d2cd86; ">.</span>x<span style="color:#d2cd86; ">,</span>p2<span style="color:#d2cd86; ">.</span>y<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+<span style="color:#b060b0; ">}</span>
+</pre>
+<p>Let’s recompile <code>Line.java</code> and run Randoop again to generate new test cases:</p>
+<pre><code>$javac Line.java 
+$java -classpath {my_dir}:./randoop-all-3.0.8.jar randoop.main.Main gentests --classlist=myclasses.txt --no-regression-tests=true
+</code></pre><p>Now that we have new <code>ErrorTest*.java</code> files, let’s compile them and run them to inspect the crashing stack traces:</p>
+<pre><code>$ javac -classpath .:{my_dir}/$JUNITPATH ErrorTest*.java -sourcepath .:{my_dir}
+$ java -classpath .:$JUNITPATH:{my_dir} org.junit.runner.JUnitCore ErrorTest
+</code></pre><p>Note that by fixing the bug in the <code>Line</code> constructor, the number of failing test cases dropped from 340 to 273.</p>
+<p>In our second run of Randoop, the first failing test, <code>test001</code>, is:</p>
+<pre style="color:#d1d1d1;background:#000000;"><span style="color:#e66170; font-weight:bold; ">public</span> void test001() <span style="color:#e66170; font-weight:bold; ">throws</span> Throwable <span style="color:#b060b0; ">{</span>
+	Point point2 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Point<span style="color:#d2cd86; ">(</span><span style="color:#009f00; ">0.0</span><span style="color:#006600; ">d</span><span style="color:#d2cd86; ">,</span> <span style="color:#d2cd86; ">(</span><span style="color:#bb7977; ">double</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">(</span><span style="color:#bb7977; ">byte</span><span style="color:#d2cd86; ">)</span><span style="color:#008c00; ">0</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+	Point point5 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Point<span style="color:#d2cd86; ">(</span><span style="color:#009f00; ">0.0</span><span style="color:#006600; ">d</span><span style="color:#d2cd86; ">,</span> <span style="color:#d2cd86; ">(</span><span style="color:#bb7977; ">double</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">(</span><span style="color:#bb7977; ">byte</span><span style="color:#d2cd86; ">)</span><span style="color:#008c00; ">0</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+	Line line6 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Line<span style="color:#d2cd86; ">(</span>point2<span style="color:#d2cd86; ">,</span> point5<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+    
+	<span style="color:#9999a9; ">// Checks the contract:  **line6.equals(line6)**</span>
+	org<span style="color:#d2cd86; ">.</span>junit<span style="color:#d2cd86; ">.</span>Assert<span style="color:#d2cd86; ">.</span>assertTrue<span style="color:#d2cd86; ">(</span><span style="color:#00c4c4; ">"Contract failed:     line6.equals(line6)"</span><span style="color:#d2cd86; ">,</span> line6<span style="color:#d2cd86; ">.</span>equals<span style="color:#d2cd86; ">(</span>line6<span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+<span style="color:#b060b0; ">}</span>
+</pre>
+<p>With the crashing stack trace:</p>
+<pre style="color:#d1d1d1;background:#000000;"> java<span style="color:#d2cd86; ">.</span>lang<span style="color:#d2cd86; ">.</span>AssertionError<span style="color:#d2cd86; ">:</span> Contract failed<span style="color:#d2cd86; ">:</span> line6<span style="color:#d2cd86; ">.</span>equals<span style="color:#d2cd86; ">(</span>line6<span style="color:#d2cd86; ">)</span>
+    at org<span style="color:#d2cd86; ">.</span>junit<span style="color:#d2cd86; ">.</span>Assert<span style="color:#d2cd86; ">.</span>fail<span style="color:#d2cd86; ">(</span>Assert<span style="color:#d2cd86; ">.</span>java<span style="color:#d2cd86; ">:</span><span style="color:#008c00; ">88</span><span style="color:#d2cd86; ">)</span>
+    at org<span style="color:#d2cd86; ">.</span>junit<span style="color:#d2cd86; ">.</span>Assert<span style="color:#d2cd86; ">.</span>assertTrue<span style="color:#d2cd86; ">(</span>Assert<span style="color:#d2cd86; ">.</span>java<span style="color:#d2cd86; ">:</span><span style="color:#008c00; ">41</span><span style="color:#d2cd86; ">)</span>
+    at ErrorTest0<span style="color:#d2cd86; ">.</span>test001<span style="color:#d2cd86; ">(</span>ErrorTest0<span style="color:#d2cd86; ">.</span>java<span style="color:#d2cd86; ">:</span><span style="color:#008c00; ">21</span><span style="color:#d2cd86; ">)</span>
+    at java<span style="color:#d2cd86; ">.</span>base<span style="color:#d2cd86; ">/</span>jdk<span style="color:#d2cd86; ">.</span>internal<span style="color:#d2cd86; ">.</span>reflect<span style="color:#d2cd86; ">.</span>NativeMethodAccessorImpl<span style="color:#d2cd86; ">.</span>invoke0<span style="color:#d2cd86; ">(</span>Native Method<span style="color:#d2cd86; ">)</span>
+<span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span>
+</pre>
+<p>Remember that the order of your test cases may not be exactly as shown due to the inherent randomness in Randoop.
+This error is more subtle and requires some digging. In particular, take a minute to look at the <code>equals</code> method for <code>Line.java.</code></p>
+<p>Did you find the error? Both of our points are non-null. Based on these if statements, <code>equals</code> will return false.</p>
+<pre style="color:#d1d1d1;background:#000000;"> <span style="color:#e66170; font-weight:bold; ">public</span> boolean equals(Object o) <span style="color:#b060b0; ">{</span>
+   	 <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span>o <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span> <span style="color:#e66170; font-weight:bold; ">return</span> <span style="color:#e66170; font-weight:bold; ">false</span><span style="color:#b060b0; ">;</span>
+   	 <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">!</span><span style="color:#d2cd86; ">(</span>o <span style="color:#e66170; font-weight:bold; ">instanceof</span> Line<span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span> <span style="color:#e66170; font-weight:bold; ">return</span> <span style="color:#e66170; font-weight:bold; ">false</span><span style="color:#b060b0; ">;</span>
+   	 Line that <span style="color:#d2cd86; ">=</span> <span style="color:#d2cd86; ">(</span>Line<span style="color:#d2cd86; ">)</span> o<span style="color:#b060b0; ">;</span>
+
+   	 <span style="color:#9999a9; ">// Check point 1</span>
+   	 <span style="color:#e66170; font-weight:bold; ">if</span><span style="color:#d2cd86; ">(</span> <span style="color:#d2cd86; ">!</span><span style="color:#d2cd86; ">(</span><span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>point1 <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span> <span style="color:#d2cd86; ">&amp;</span><span style="color:#d2cd86; ">&amp;</span> that<span style="color:#d2cd86; ">.</span>point1 <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">{</span>
+   		 <span style="color:#e66170; font-weight:bold; ">return</span> <span style="color:#e66170; font-weight:bold; ">false</span><span style="color:#b060b0; ">;</span>
+   	 <span style="color:#b060b0; ">}</span>
+   	 <span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span>
+
+   	 <span style="color:#9999a9; ">// Check point 2</span>
+   	 <span style="color:#e66170; font-weight:bold; ">if</span><span style="color:#d2cd86; ">(</span> <span style="color:#d2cd86; ">!</span><span style="color:#d2cd86; ">(</span><span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>point2 <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span> <span style="color:#d2cd86; ">&amp;</span><span style="color:#d2cd86; ">&amp;</span> that<span style="color:#d2cd86; ">.</span>point2 <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">{</span>
+   		 <span style="color:#e66170; font-weight:bold; ">return</span> <span style="color:#e66170; font-weight:bold; ">false</span><span style="color:#b060b0; ">;</span>
+   	 <span style="color:#b060b0; ">}</span>
+   	<span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span>
+
+   	 <span style="color:#9999a9; ">// return true if no equality invalid</span>
+   	 <span style="color:#e66170; font-weight:bold; ">return</span> <span style="color:#e66170; font-weight:bold; ">true</span><span style="color:#b060b0; ">;</span>
+     <span style="color:#b060b0; ">}</span>
+</pre>
+<p>We can fix the error by replacing the condition using an “exclusive or” operator. If exactly one of the points we are comparing is null, we know that they cannot be equal and should return false.</p>
+<pre style="color:#d1d1d1;background:#000000;">
+<span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span><span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>point1 <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span> <span style="color:#d2cd86; ">^</span> that<span style="color:#d2cd86; ">.</span>point1 <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span> <span style="color:#b060b0; ">{</span>
+
+</pre>
+<p>We should also take care to consider the case in which both points are null. In this case, the <code>equals</code> function should not return false. Add a condition to ensure this case is handled properly.</p>
+<p>Once you’ve fixed the bug, recompile <code>Line.java</code>, rerun Randoop, and compile and run the crashing test cases.</p>
+<pre style="color:#d1d1d1;background:#000000;">$javac Line<span style="color:#d2cd86; ">.</span>java 
+$java <span style="color:#d2cd86; ">-</span>classpath <span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span><span style="color:#d2cd86; ">:</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">/</span>randoop<span style="color:#d2cd86; ">-</span>all<span style="color:#d2cd86; ">-</span><span style="color:#009f00; ">3.0</span><span style="color:#d2cd86; ">.</span><span style="color:#009f00; ">8.</span>jar randoop<span style="color:#d2cd86; ">.</span>main<span style="color:#d2cd86; ">.</span>Main gentests <span style="color:#d2cd86; ">-</span><span style="color:#d2cd86; ">-</span>classlist<span style="color:#d2cd86; ">=</span>myclasses<span style="color:#d2cd86; ">.</span>txt <span style="color:#d2cd86; ">-</span><span style="color:#d2cd86; ">-</span>no<span style="color:#d2cd86; ">-</span>regression<span style="color:#d2cd86; ">-</span>tests<span style="color:#d2cd86; ">=</span><span style="color:#e66170; font-weight:bold; ">true</span>
+$javac <span style="color:#d2cd86; ">-</span>classpath <span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">:</span><span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span><span style="color:#d2cd86; ">/</span>$JUNITPATH ErrorTest<span style="color:#d2cd86; ">*</span><span style="color:#d2cd86; ">.</span>java <span style="color:#d2cd86; ">-</span>sourcepath <span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">:</span><span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span>
+$java <span style="color:#d2cd86; ">-</span>classpath <span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">:</span>$JUNITPATH<span style="color:#d2cd86; ">:</span><span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span> org<span style="color:#d2cd86; ">.</span>junit<span style="color:#d2cd86; ">.</span>runner<span style="color:#d2cd86; ">.</span>JUnitCore ErrorTest
+</pre>
+<p>Note that by fixing the bug in <code>Line.equals</code> the number of crashing test cases created by Randoop was reduced from 273 to 29.</p>
+<p>In our third run of Randoop, the first failing test, <code>test01</code>, is:</p>
+<pre style="color:#d1d1d1;background:#000000;">  <span style="color:#e66170; font-weight:bold; ">public</span> void test01() <span style="color:#e66170; font-weight:bold; ">throws</span> Throwable <span style="color:#b060b0; ">{</span>
+	Point point2 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Point<span style="color:#d2cd86; ">(</span><span style="color:#009f00; ">0.0</span><span style="color:#006600; ">d</span><span style="color:#d2cd86; ">,</span> <span style="color:#d2cd86; ">(</span><span style="color:#bb7977; ">double</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">(</span><span style="color:#bb7977; ">byte</span><span style="color:#d2cd86; ">)</span><span style="color:#008c00; ">0</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+	Point point5 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Point<span style="color:#d2cd86; ">(</span><span style="color:#009f00; ">0.0</span><span style="color:#006600; ">d</span><span style="color:#d2cd86; ">,</span> <span style="color:#d2cd86; ">(</span><span style="color:#bb7977; ">double</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">(</span><span style="color:#bb7977; ">byte</span><span style="color:#d2cd86; ">)</span><span style="color:#008c00; ">0</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+	Line line6 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Line<span style="color:#d2cd86; ">(</span>point2<span style="color:#d2cd86; ">,</span> point5<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+	<span style="color:#bb7977; font-weight:bold; ">Vector</span> vector8 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> <span style="color:#bb7977; font-weight:bold; ">Vector</span><span style="color:#d2cd86; ">(</span>point2<span style="color:#d2cd86; ">,</span> <span style="color:#d2cd86; ">(</span>java<span style="color:#d2cd86; ">.</span>lang<span style="color:#d2cd86; ">.</span><span style="color:#bb7977; font-weight:bold; ">Integer</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">-</span><span style="color:#008c00; ">1</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+    
+	<span style="color:#9999a9; ">// This assertion (transitivity of equals) fails</span>
+	org<span style="color:#d2cd86; ">.</span>junit<span style="color:#d2cd86; ">.</span>Assert<span style="color:#d2cd86; ">.</span>assertTrue<span style="color:#d2cd86; ">(</span><span style="color:#00c4c4; ">"Contract failed: equals-transitive on vector8, point5, and point5."</span><span style="color:#d2cd86; ">,</span> <span style="color:#d2cd86; ">!</span><span style="color:#d2cd86; ">(</span>vector8<span style="color:#d2cd86; ">.</span>equals<span style="color:#d2cd86; ">(</span>point5<span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">&amp;</span><span style="color:#d2cd86; ">&amp;</span> point5<span style="color:#d2cd86; ">.</span>equals<span style="color:#d2cd86; ">(</span>point5<span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">|</span><span style="color:#d2cd86; ">|</span> vector8<span style="color:#d2cd86; ">.</span>equals<span style="color:#d2cd86; ">(</span>point5<span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+
+ <span style="color:#b060b0; ">}</span>
+</pre>
+<p>With the crashing stack trace:</p>
+<pre style="color:#d1d1d1;background:#000000;">java<span style="color:#d2cd86; ">.</span>lang<span style="color:#d2cd86; ">.</span>ClassCastException<span style="color:#d2cd86; ">:</span> <span style="color:#e66170; font-weight:bold; ">class</span> Point cannot be cast to <span style="color:#e66170; font-weight:bold; ">class</span> Vector <span style="color:#d2cd86; ">(</span>Point and Vector are in unnamed module of loader <span style="color:#00c4c4; ">'app'</span><span style="color:#d2cd86; ">)</span>
+    at Vector<span style="color:#d2cd86; ">.</span>equals<span style="color:#d2cd86; ">(</span>Vector<span style="color:#d2cd86; ">.</span>java<span style="color:#d2cd86; ">:</span><span style="color:#008c00; ">43</span><span style="color:#d2cd86; ">)</span>
+    at ErrorTest0<span style="color:#d2cd86; ">.</span>test01<span style="color:#d2cd86; ">(</span>ErrorTest0<span style="color:#d2cd86; ">.</span>java<span style="color:#d2cd86; ">:</span><span style="color:#008c00; ">22</span><span style="color:#d2cd86; ">)</span>
+    at java<span style="color:#d2cd86; ">.</span>base<span style="color:#d2cd86; ">/</span>jdk<span style="color:#d2cd86; ">.</span>internal<span style="color:#d2cd86; ">.</span>reflect<span style="color:#d2cd86; ">.</span>NativeMethodAccessorImpl<span style="color:#d2cd86; ">.</span>invoke0<span style="color:#d2cd86; ">(</span>Native Method<span style="color:#d2cd86; ">)</span>
+</pre>
+<p>Notice that this test case is very similar to the previous <code>test001</code>. In fact, the first three lines are identical. This is expected as Randoop generates new test cases by expanding previously generated test cases with additional method calls.</p>
+<p>From the stack trace, we can deduce that the error is on line 43 of <code>Vector.java</code> (marked with a comment):</p>
+<pre style="color:#d1d1d1;background:#000000;"><span style="color:#e66170; font-weight:bold; ">public</span> boolean equals(Object o) <span style="color:#b060b0; ">{</span>
+   	 <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span>o <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span> <span style="color:#e66170; font-weight:bold; ">return</span> <span style="color:#e66170; font-weight:bold; ">false</span><span style="color:#b060b0; ">;</span>
+   	 <span style="color:#bb7977; font-weight:bold; ">Vector</span> that <span style="color:#d2cd86; ">=</span> <span style="color:#d2cd86; ">(</span><span style="color:#bb7977; font-weight:bold; ">Vector</span><span style="color:#d2cd86; ">)</span> o<span style="color:#b060b0; ">;</span> <span style="color:#9999a9; ">//line 43</span>
+
+   	 <span style="color:#e66170; font-weight:bold; ">if</span><span style="color:#d2cd86; ">(</span><span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>origin <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span> <span style="color:#d2cd86; ">|</span><span style="color:#d2cd86; ">|</span> that<span style="color:#d2cd86; ">.</span>origin <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span>
+   		 <span style="color:#e66170; font-weight:bold; ">return</span> <span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>origin <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span> <span style="color:#d2cd86; ">&amp;</span><span style="color:#d2cd86; ">&amp;</span> that<span style="color:#d2cd86; ">.</span>origin <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span> <span style="color:#d2cd86; ">&amp;</span><span style="color:#d2cd86; ">&amp;</span> <span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>degrees <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> that<span style="color:#d2cd86; ">.</span>degrees<span style="color:#b060b0; ">;</span>
+   	 <span style="color:#e66170; font-weight:bold; ">else</span>
+   		 <span style="color:#e66170; font-weight:bold; ">return</span> <span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>origin<span style="color:#d2cd86; ">.</span>equals<span style="color:#d2cd86; ">(</span>that<span style="color:#d2cd86; ">.</span>origin<span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">&amp;</span><span style="color:#d2cd86; ">&amp;</span> <span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>degrees <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> that<span style="color:#d2cd86; ">.</span>degrees<span style="color:#b060b0; ">;</span>
+<span style="color:#b060b0; ">}</span>
+</pre>
+<p>Let’s fix this by adding a check for if <code>o</code> is an instance of <code>Vector</code> prior to performing the cast:</p>
+<pre style="color:#d1d1d1;background:#000000;"><span style="color:#e66170; font-weight:bold; ">public</span> boolean equals(Object o) <span style="color:#b060b0; ">{</span>
+   	 <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span>o <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span> <span style="color:#d2cd86; ">|</span><span style="color:#d2cd86; ">|</span> <span style="color:#d2cd86; ">!</span><span style="color:#d2cd86; ">(</span>o <span style="color:#e66170; font-weight:bold; ">instanceof</span> <span style="color:#bb7977; font-weight:bold; ">Vector</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span> <span style="color:#e66170; font-weight:bold; ">return</span> <span style="color:#e66170; font-weight:bold; ">false</span><span style="color:#b060b0; ">;</span> <span style="color:#9999a9; ">//cast here!</span>
+   	 <span style="color:#bb7977; font-weight:bold; ">Vector</span> that <span style="color:#d2cd86; ">=</span> <span style="color:#d2cd86; ">(</span><span style="color:#bb7977; font-weight:bold; ">Vector</span><span style="color:#d2cd86; ">)</span> o<span style="color:#b060b0; ">;</span>
+
+   	 <span style="color:#e66170; font-weight:bold; ">if</span><span style="color:#d2cd86; ">(</span><span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>origin <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span> <span style="color:#d2cd86; ">|</span><span style="color:#d2cd86; ">|</span> that<span style="color:#d2cd86; ">.</span>origin <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span>
+   		 <span style="color:#e66170; font-weight:bold; ">return</span> <span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>origin <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span> <span style="color:#d2cd86; ">&amp;</span><span style="color:#d2cd86; ">&amp;</span> that<span style="color:#d2cd86; ">.</span>origin <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span> <span style="color:#d2cd86; ">&amp;</span><span style="color:#d2cd86; ">&amp;</span> <span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>degrees <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> that<span style="color:#d2cd86; ">.</span>degrees<span style="color:#b060b0; ">;</span>
+   	 <span style="color:#e66170; font-weight:bold; ">else</span>
+   		 <span style="color:#e66170; font-weight:bold; ">return</span> <span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>origin<span style="color:#d2cd86; ">.</span>equals<span style="color:#d2cd86; ">(</span>that<span style="color:#d2cd86; ">.</span>origin<span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">&amp;</span><span style="color:#d2cd86; ">&amp;</span> <span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">.</span>degrees <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> that<span style="color:#d2cd86; ">.</span>degrees<span style="color:#b060b0; ">;</span>
+<span style="color:#b060b0; ">}</span>
+</pre>
+<p>Edit both conditions to fix the bug, recompile <code>Vector.java</code>, rerun Randoop, and compile and run the crashing test cases. Now, the number of crashing test cases produced by Randoop is only 6. We are almost done!</p>
+<p>In our fourth run of Randoop, the first failing test, <code>test1</code>, is shown here. At this point, the sequence of generated method calls has become quite long. We have shortened it here to show the relevant calls.</p>
+<pre style="color:#d1d1d1;background:#000000;"><span style="color:#e66170; font-weight:bold; ">public</span> void test1() <span style="color:#e66170; font-weight:bold; ">throws</span> Throwable <span style="color:#b060b0; ">{</span>
+	Point point0 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#b060b0; ">;</span>
+	Point point1 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#b060b0; ">;</span>
+	Line line2 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#b060b0; ">;</span>
+	Parabola parabola3 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Parabola<span style="color:#d2cd86; ">(</span>point0<span style="color:#d2cd86; ">,</span> point1<span style="color:#d2cd86; ">,</span> line2<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+	<span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span>
+	parabola3<span style="color:#d2cd86; ">.</span>focus <span style="color:#d2cd86; ">=</span> point4<span style="color:#b060b0; ">;</span>
+	<span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span>
+	Point point35 <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Point<span style="color:#d2cd86; ">(</span><span style="color:#009f00; ">0.0</span><span style="color:#006600; ">d</span><span style="color:#d2cd86; ">,</span> <span style="color:#d2cd86; ">(</span><span style="color:#bb7977; ">double</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">(</span><span style="color:#bb7977; ">byte</span><span style="color:#d2cd86; ">)</span><span style="color:#008c00; ">0</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+	<span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span>
+	parabola3<span style="color:#d2cd86; ">.</span>vertex <span style="color:#d2cd86; ">=</span> point35<span style="color:#b060b0; ">;</span>
+	<span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">.</span>
+    
+	<span style="color:#9999a9; ">// Checks the contract:  equals-hashcode on parabola3 and parabola3</span>
+	org<span style="color:#d2cd86; ">.</span>junit<span style="color:#d2cd86; ">.</span>Assert<span style="color:#d2cd86; ">.</span>assertTrue<span style="color:#d2cd86; ">(</span><span style="color:#00c4c4; ">"Contract failed: equals-hashcode on parabola3 and parabola3"</span><span style="color:#d2cd86; ">,</span> parabola3<span style="color:#d2cd86; ">.</span>equals<span style="color:#d2cd86; ">(</span>parabola3<span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">?</span> parabola3<span style="color:#d2cd86; ">.</span>hashCode<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> parabola3<span style="color:#d2cd86; ">.</span>hashCode<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">:</span> <span style="color:#e66170; font-weight:bold; ">true</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+
+  <span style="color:#b060b0; ">}</span>
+</pre>
+<p>With the crashing stack trace:</p>
+<pre style="color:#d1d1d1;background:#000000;">java<span style="color:#d2cd86; ">.</span>lang<span style="color:#d2cd86; ">.</span>NullPointerException
+    at Parabola<span style="color:#d2cd86; ">.</span>hashCode<span style="color:#d2cd86; ">(</span>Parabola<span style="color:#d2cd86; ">.</span>java<span style="color:#d2cd86; ">:</span><span style="color:#008c00; ">118</span><span style="color:#d2cd86; ">)</span>
+    at ErrorTest0<span style="color:#d2cd86; ">.</span>test1<span style="color:#d2cd86; ">(</span>ErrorTest0<span style="color:#d2cd86; ">.</span>java<span style="color:#d2cd86; ">:</span><span style="color:#008c00; ">47</span><span style="color:#d2cd86; ">)</span>
+    at java<span style="color:#d2cd86; ">.</span>base<span style="color:#d2cd86; ">/</span>jdk<span style="color:#d2cd86; ">.</span>internal<span style="color:#d2cd86; ">.</span>reflect<span style="color:#d2cd86; ">.</span>NativeMethodAccessorImpl<span style="color:#d2cd86; ">.</span>invoke0<span style="color:#d2cd86; ">(</span>Native Method<span style="color:#d2cd86; ">)</span>
+</pre>
+<p>The failing contract here is that if two parabolas are equal, their hash codes must also be equal. So, let’s take a look at the <code>hashCode</code> method to see if anything looks suspicious.</p>
+<pre style="color:#d1d1d1;background:#000000;"><span style="color:#e66170; font-weight:bold; ">public</span> int hashCode() <span style="color:#b060b0; ">{</span>
+      <span style="color:#e66170; font-weight:bold; ">final</span> <span style="color:#bb7977; ">int</span> prime <span style="color:#d2cd86; ">=</span> <span style="color:#008c00; ">17</span><span style="color:#b060b0; ">;</span>
+      <span style="color:#bb7977; ">int</span> result <span style="color:#d2cd86; ">=</span> <span style="color:#008c00; ">1</span><span style="color:#b060b0; ">;</span>
+      result <span style="color:#d2cd86; ">=</span> prime <span style="color:#d2cd86; ">*</span> result <span style="color:#d2cd86; ">+</span> <span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">(</span>focus <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">?</span> <span style="color:#008c00; ">0</span> <span style="color:#d2cd86; ">:</span> focus<span style="color:#d2cd86; ">.</span>hashCode<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+      result <span style="color:#d2cd86; ">=</span> prime <span style="color:#d2cd86; ">*</span> result <span style="color:#d2cd86; ">+</span> <span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">(</span>vertex <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">?</span> <span style="color:#008c00; ">0</span> <span style="color:#d2cd86; ">:</span> focus<span style="color:#d2cd86; ">.</span>hashCode<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+      result <span style="color:#d2cd86; ">=</span> prime <span style="color:#d2cd86; ">*</span> result <span style="color:#d2cd86; ">+</span> 
+                    <span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">(</span>directrix <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">?</span> <span style="color:#008c00; ">0</span> <span style="color:#d2cd86; ">:</span> directrix<span style="color:#d2cd86; ">.</span>hashCode<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span>
+      <span style="color:#e66170; font-weight:bold; ">return</span> result<span style="color:#b060b0; ">;</span>
+<span style="color:#b060b0; ">}</span>
+</pre>
+<p>Once you’ve found the bug, fix it so the method returns the correct <code>hashCode</code>.</p>
+<p>Now, let’s execute Randoop with a final long running iteration to confirm there are no additional bugs to be found. You can specify a time limit in seconds using the <code>--timelimit</code> option. Here, we choose five minutes as a conservative limit.</p>
+<pre><code>$java -classpath {my_dir}:./randoop-all-3.0.8.jar randoop.main.Main gentests --classlist=myclasses.txt --no-regression-tests=true --timelimit=300
+</code></pre><p>After five minutes, Randoop should report there are “No error-revealing tests to output”.</p>
+<p>In summary, Randoop can be used to automatically generate unit test cases to test important properties. These properties can be default intrinsic properties such as the ones we tested in this article, or user specified invariants. Randoop reduces the burden on the developer to create high quality unit tests. Imagine how many test cases we would have had to write to obtain this level of coverage! Furthermore, when testing small units that take structured input as data, Randoop provides a superior technique to randomized testing. Because of this, Randoop is a useful tool used in industry at companies such as ABB, Microsoft, and on many open-source projects.</p>
+-->
+
+    </div>
+    <div class="post-footer">
+      <div class="info">
+        
+        
+      </div>
+    </div>
+
+    
+</div>
+
+
+                </div>
+            </div>
+        </div>
+</body>
+
+
+
+<script type="text/javascript" src="https://www.elizabethdinella.github.io/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js" integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw=" crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript" src="https://www.elizabethdinella.github.io/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js" integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://www.elizabethdinella.github.io/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js" integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro=" crossorigin="anonymous"></script></html></body>
+
+</html>
