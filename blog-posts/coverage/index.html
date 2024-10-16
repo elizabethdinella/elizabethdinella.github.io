@@ -218,7 +218,19 @@ OK (<span style="color: rgb(245, 171, 53); font-weight: 400;">2</span> tests)
 </code>
 </p>
 
+<br>
+<br>
+<p>
+This tells us that the implementation of calculatePrice meets the specification described with the two test cases. Notice that our test suite did not trigger either of the bugs. Just because our tests pass, doesn’t mean our code is correct! It is only correct on the specific inputs which we tested. Now, let’s measure the quality of our test suite using code coverage.  To do this, we will use the tool jacoco. This will require some additional setup: <br> <br>
 
+1. Navigate to the code-coverage directory  <br>
+2. Download jacoco zip file <br>
+&emsp; wget https://repo1.maven.org/maven2/org/jacoco/jacoco/0.8.10/jacoco-0.8.10.zip <br>
+3. unzip jacoco <br>
+&emsp; unzip jacoco-0.8.10.zip -d jacoco
+
+Run bash <a href="https://github.com/elizabethdinella/code-coverage/blob/main/run_coverage.sh">run_coverage.sh</a> to generate a coverage report which measure the quality of our test suite. Open the coverage report (coverage-report/index.html) in your browser of choice. You should see something like this:
+</p>
 
 
     </div>
