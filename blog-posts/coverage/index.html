@@ -117,33 +117,34 @@
 </p>
 
 <p>
-Consider the following running example for calculating a ticket price to an event. The ticket price is discounted if you buy in advance. It applies a time-based discount proportional to the days until the event. For example, on a $150 ticket, buying a ticket 10 days before the event will apply a 20% discount while buying a ticket 1 day before the event will apply a 2% discount. A further 10% discount is applied if the customer is a member. Lastly, ticket price is also discounted for senior citizens (65+) and minors (under 18). This discount is also proportional. A 75 year old customer will receive a 20% discount on a $150 ticket while an 85 year old customer will receive a 40% discount. </p>
+Consider the following <a href="https://github.com/elizabethdinella/code-coverage/blob/main/src/BuyTicket.java"> running example</a> for calculating a ticket price to an event. The ticket price is discounted if you buy in advance. It applies a time-based discount proportional to the days until the event. For example, on a $150 ticket, buying a ticket 10 days before the event will apply a 20% discount while buying a ticket 1 day before the event will apply a 2% discount. A further 10% discount is applied if the customer is a member. Lastly, ticket price is also discounted for senior citizens (65+) and minors (under 18). This discount is also proportional. A 75 year old customer will receive a 20% discount on a $150 ticket while an 85 year old customer will receive a 40% discount. </p>
 
 <code> 
-public class BuyTicket {
-    /**
+<pre style="font-family:monospace;color: rgb(248, 248, 242); background-color: rgb(43, 43, 43); font-weight: 400; "><span style="color: rgb(220, 198, 224); font-weight: 400;">public</span> <span style="color: rgb(220, 198, 224); font-weight: 400;">class</span> <span style="color: rgb(0, 224, 224); font-weight: 400;">BuyTicket</span> {
+    <span style="color: rgb(212, 208, 171); font-weight: 400;">/**
      * Calculates discount based on customer age and number of days until event
-     * @param basePrice Base price of the ticket without any discount
-     * @param daysUntilEvent Number of days remaining until the event day
-     * @param customerAge Age of the customer
-     * @param isMember Boolean indicating if the custsomer is a member
-     * @return ticket price discounted based on number of days remaining and potential age and membership discount
-     */
+     * <span style="color: rgb(212, 208, 171); font-weight: 400;">@param</span> basePrice Base price of the ticket without any discount
+     * <span style="color: rgb(212, 208, 171); font-weight: 400;">@param</span> daysUntilEvent Number of days remaining until the event day
+     * <span style="color: rgb(212, 208, 171); font-weight: 400;">@param</span> customerAge Age of the customer
+     * <span style="color: rgb(212, 208, 171); font-weight: 400;">@param</span> isMember Boolean indicating if the custsomer is a member
+     * <span style="color: rgb(212, 208, 171); font-weight: 400;">@return</span> ticket price discounted based on number of days remaining and potential age and membership discount
+     */</span>
 
-    public static double calculatePrice(int basePrice, int daysUntilEvent, int customerAge, boolean isMember) {
-        double maxDiscount = basePrice - 100;
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">public</span> <span style="color: rgb(220, 198, 224); font-weight: 400;">static</span> <span style="color: rgb(245, 171, 53); font-weight: 400;">double</span> <span style="color: rgb(0, 224, 224); font-weight: 400;">calculatePrice</span><span style="color: rgb(245, 171, 53); font-weight: 400;">(<span style="color: rgb(245, 171, 53); font-weight: 400;">int</span> basePrice, <span style="color: rgb(245, 171, 53); font-weight: 400;">int</span> daysUntilEvent, <span style="color: rgb(245, 171, 53); font-weight: 400;">int</span> customerAge, <span style="color: rgb(245, 171, 53); font-weight: 400;">boolean</span> isMember)</span> {
+        <span style="color: rgb(245, 171, 53); font-weight: 400;">double</span> <span style="color: rgb(255, 160, 122); font-weight: 400;">maxDiscount</span> <span style="color: rgb(248, 248, 242); font-weight: 400;">=</span> basePrice - <span style="color: rgb(245, 171, 53); font-weight: 400;">100</span>;
 
-        double discountRate = daysUntilEvent / maxDiscount; // BUG 1: potential division by zero
+        <span style="color: rgb(245, 171, 53); font-weight: 400;">double</span> <span style="color: rgb(255, 160, 122); font-weight: 400;">discountRate</span> <span style="color: rgb(248, 248, 242); font-weight: 400;">=</span> daysUntilEvent / maxDiscount; <span style="color: rgb(212, 208, 171); font-weight: 400;">// BUG 1: potential division by zero</span>
         
-        if (isMember) discountRate += .10;
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> (isMember) discountRate += <span style="color: rgb(245, 171, 53); font-weight: 400;">.10</span>;
 
-        if (customerAge >= 65 || customerAge < 18) {
-            discountRate += (customerAge - 65) / maxDiscount; //BUG 2: customerAge < 18 gives negative discount
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> (customerAge &gt;= <span style="color: rgb(245, 171, 53); font-weight: 400;">65</span> || customerAge &lt; <span style="color: rgb(245, 171, 53); font-weight: 400;">18</span>) {
+            discountRate += (customerAge - <span style="color: rgb(245, 171, 53); font-weight: 400;">65</span>) / maxDiscount; <span style="color: rgb(212, 208, 171); font-weight: 400;">//BUG 2: customerAge &lt; 18 gives negative discount</span>
         }
 
-        return basePrice - (basePrice * discountRate);
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">return</span> basePrice - (basePrice * discountRate);
     }
 }
+</pre>
 </code>
 
 <!-- <p>First, use <code>javac</code> to compile the Java files to class files:</p>
