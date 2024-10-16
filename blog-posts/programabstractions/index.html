@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" data-theme=""><head>
+    <title>  | Program Abstractions </title>
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.74.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="University Of Pennsylvania PhD Student">
+    
+    <link rel="stylesheet" href="https://www.seas.upenn.edu/~edinella/css/style.min.e93575d7ce4df83c7a9af72ec12e9a136620fe36031c57c52ba99762ae705d53.css" integrity="sha256-6TV1185N&#43;Dx6mvcuwS6aE2Yg/jYDHFfFK6mXYq5wXVM=" crossorigin="anonymous" type="text/css"><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+    <link rel="shortcut icon" href="https://www.seas.upenn.edu/~edinella/favicons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.seas.upenn.edu/~edinella/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.seas.upenn.edu/~edinella/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.seas.upenn.edu/~edinella/favicons/favicon-16x16.png">
+    <link rel="canonical" href="https://www.seas.upenn.edu/~edinella/blog-posts/programabstractions/">
+    
+    
+    <script type="text/javascript" src="https://www.seas.upenn.edu/~edinella/js/anatole-header.min.7e2fc0724240b28c6e214687e73a4a6eb6c196bbace546b9dc86e94cca120b5c.js" integrity="sha256-fi/AckJAsoxuIUaH5zpKbrbBlrus5Ua53IbpTMoSC1w=" crossorigin="anonymous"></script>
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.seas.upenn.edu/~edinella/images/site-feature-image.png"/>
+
+<meta name="twitter:title" content="Program Abstractions"/>
+<meta name="twitter:description" content="Sample article showcasing basic Markdown syntax and formatting for HTML elements."/>
+
+</head><body><div class="sidebar animated fadeInDown">
+    <div class="logo-title">
+      <div class="title">
+	      <!-- <img src="https://www.seas.upenn.edu/~edinella/images/image.png" alt="profile picture"> -->
+        <h3 title=""><a href="/">Elizabeth Dinella</a></h3>
+        <div class="description">
+          <p>University Of Pennsylvania PhD Student</p>
+        </div>
+      </div>
+    </div>
+    <ul class="social-links">
+        
+        <li>
+        <a href="https://www.linkedin.com/in/elizabeth-dinella-154772102/" rel="me" aria-label="Linkedin">
+          <i class="fa fa-2x fa-linkedin" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://twitter.com/eadinella" rel="me" aria-label="Twitter">
+          <i class="fa fa-2x fa-twitter" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://github.com/elizabethdinella" rel="me" aria-label="GitHub">
+          <i class="fa fa-2x fa-github" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="mailto:edinella@seas.upenn.edu" rel="me" aria-label="e-mail">
+          <i class="fa fa-2x fa-envelope" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://instagram.com/cinnabon.chow" rel="me" aria-label="dog">
+          <i class="fa fa-2x fa-paw" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+    </ul>
+    <div class="footer">
+        
+      </div>
+    </div>
+</div>
+<div class="main">
+            <div class="page-top animated fadeInDown">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    <ul class="nav" id="navMenu">
+        
+        
+        
+        <li><a  href="/~edinella/"  title="">About Me</a></li>
+        
+        
+        <li><a  href="/~edinella/blog-posts/"  title="">Blog Posts</a></li>
+        
+        
+        <li class="theme-switch-item">
+		
+        </li>
+    </ul>
+</div>
+
+            <div class="autopagerize_page_element">
+                <div class="content">
+<div class="post animated fadeInDown">
+    <div class="post-content">
+
+      <div class="post-title">
+        <h3>Program Abstractions
+        </h3>
+        
+        </div>
+
+    <p>Any non-trivial semantic property that we may wish to check about programs is undecidable. Examples of such properties include whether an assertion may fail on some input, whether the program will terminate on all inputs, and many others. Thus, it is clear that any program analysis must work with approximations of programs, called <em>abstractions</em>.</p>
+<p>Designing a suitable program abstraction is a delicate balance of tradeoffs. By abstracting a program, we lose some concrete information. A good choice of abstract domain depends on the analysis designer’s use cases but, in general, should be abstract enough to allow for efficient analysis and precise enough to check a desired property in programs of interest. In this article, we will explore a series of <em>numerical abstract domains</em>, each increasing in precision. These domains can be used to statically check for programming errors involving integers, such as divide-by-zero and array index out-of-bounds errors. The principles in this article are also applicable to designing abstract domains for program data types besides integers, such as pointers, reals, and arrays.</p>
+<h4> Abstract Domain 1: The Sign Domain </h4>
+We begin with a simple abstract domain: the sign domain. It consists of five abstract values:
+<ul>
+<li> Zero (0), representing the integer value 0; </li>
+<li> Minus (-), representing any negative integer value; </li>
+<li> Plus (+), representing any positive integer value; </li>
+<li> Top (?), representing any integer value; and </li>
+<li> Bottom (⊥), representing no integer value. </li>
+</ul>
+<p>In contrast, the <em>concrete</em> domain contains all possible integer values &ndash; in fact, infinitely many.</p>
+<p>The reader may wonder why we assume <em>infinitely</em> many integers in the concrete domain; after all, programming languages typically limit the size of an integer value. For instance, in Java, the int type is 4 bytes in size, allowing integer values from -231 to 231-1, or -2,147,483,648 to 2,147,483,647. Our assumption is motivated by the desire to analyze programs at a more general and fundamental level, rather than in a particular programming language or on a particular computer machine. Note that, even if we were to target a specific language or machine, we might want abstraction for efficiency reasons.</p>
+<p>Elements in the abstract domain are <em>partially ordered</em> and depicted using a <a href="https://en.wikipedia.org/wiki/Hasse_diagram">Hasse diagram</a>, shown below for the sign domain.</p>
+<img src="/~edinella/images/image4.png" class=center> 
+<p>An edge from a lower element X to a higher element Y in the diagram indicates that X is <em>at least as precise as</em> Y.  For instance, an edge from ‘+’ to ‘?’ indicates that ‘+’ is a more precise abstract value than ‘?’ for any positive integer (such as 42). A partial order is by definition <em>transitive</em> (e.g., ‘⊥’ is more precise than ‘?’) and <em>anti-symmetric</em> (two different elements cannot be more precise than each other). Lastly, the order is <em>partial</em> as opposed to <em>total;</em> for instance, there is no edge from ‘+’ to ‘-’, indicating that abstract values ‘+’ and ‘-’ are incomparable (i.e., neither is more precise than the other).</p>
+<p>Although the sign domain has only a few states, it suffices for some straightforward use cases. For example, consider the following program. The comments in <span style="color:  #00ffff">blue</span> represent the abstract value of integer variable x at the current program point. The <span style="color: #A00000">red</span> comments represent specific points in the program.</p>
+<pre style="color:#000000;background: #A0A0A0; max-width: 60%; float: left; padding: 20px; margin-right: 20px; margin-top: 20px">   <span style="color:#00ffff; ">// x: ? </span>
+
+   <span style="color:#000084; font-weight:bold; ">if</span> (x == 0) {       <span style="color:#A00000; ">// p1</span>
+
+   <span style="color:#00ffff; ">// x: 0</span>
+
+       x++;            <span style="color:#A00000; ">// p2</span>
+
+   <span style="color:#00ffff; ">// x: +</span>
+
+   } <span style="color:#000084; font-weight:bold; ">else</span> <span style="color:#000084; font-weight:bold; ">if</span> (x &gt; 0) { <span style="color:#A00000; ">// p3</span>
+
+   <span style="color:#00ffff; ">// x: +</span>
+
+       x = x * 20;     <span style="color:#A00000; ">// p4</span>
+
+   <span style="color:#00ffff; ">// x: +</span>
+
+   } <span style="color:#000084; font-weight:bold; ">else</span> <span style="color:#000084; font-weight:bold; ">if</span> (x &lt; 0) { <span style="color:#A00000; ">// p5</span>
+
+   <span style="color:#00ffff; ">// x: -</span>
+
+       x = x * (-10);  <span style="color:#A00000; ">// p6</span>
+
+   <span style="color:#00ffff; ">// x: +</span>
+
+   }
+
+   <span style="color:#00ffff; ">// x: +</span>
+
+   assert(x &gt; 0); 
+</pre>
+<p style="margin: 40px">At the start of the program, the analysis initializes the *abstract value* of x to ‘?’ since x is uninitialized and could take any integer value. Next, we interpret the conditional at program point <span style="color:#A00000">p1</span> to determine that the abstract value of x should be ‘0’. At <span style="color:#A00000">p2</span> we reach the addition operation. How should we apply addition to an abstract value? In general, we must define the semantics of each operation in the programming language or intermediate language (such as the <a href="https://llvm.org/docs/LangRef.html">LLVM IR</a>) on abstract values. This is called the abstract semantics, in contrast to the language’s *concrete semantics* that is typically defined in its reference manual.
+<p>The abstract semantics of the addition operation can be defined as expected: adding two negative values results in a negative number, but adding a negative value to a positive value can be positive or negative. So, we must represent it as ‘?’.  The rest of the abstract semantics for addition is shown in the following table: </p></p>
+<img src="/~edinella/images/image5.png" style="max-width:20%; display:block; margin-left:auto; margin-right:auto; margin-top:50px"> 
+<p>So, at program point <span style="color:#A00000">p2</span> the abstract value of x becomes ‘+’. Similarly, at program point <span style="color:#A00000">p3</span> we interpret the conditional and determine that the abstract value of x should be ‘+’. Now, we reach program point <span style="color:#A00000">p4</span> that involves multiplication. Likewise, we must define the abstract semantics of the multiply operation:</p>
+<img src="/~edinella/images/image6.png" style="max-width:20%; display:block; margin-left:auto; margin-right:auto"> 
+<p>So, at program point <span style="color:#A00000">p4</span> we set the abstract value of x to be ‘+’, the result of multiplying two positive values. The last conditional follows similarly. Once we reach the assertion, we must merge the abstract values of x from each path. The <em>merge</em> operator in this domain is a conjunction. This means that for the abstract value to be ‘+’, the abstract values along all incoming paths must also be ‘+’. If there is any disagreement, we default to ‘?’. Here, the abstract value of x is ‘+’ along all paths, which in turn allows our static analysis to prove the assertion (x &gt; 0) at the end of the program.</p>
+<p>It is clear that a merge may cause us to lose some information. For example, consider the following program:</p>
+<pre style="color:#000000;background: #A0A0A0; max-width: 60%; float: left; padding: 20px; margin-right: 20px; margin-top: 20px">   <span style="color:#00ffff; ">// x: ? </span>
+
+   <span style="color:#000084; font-weight:bold; ">if</span> (x == 0) {       <span style="color:#A00000; ">// p1</span>
+
+   <span style="color:#00ffff; ">// x: 0</span>
+
+       x++;            <span style="color:#A00000; ">// p2</span>
+
+   <span style="color:#00ffff; ">// x: +</span>
+
+   } <span style="color:#000084; font-weight:bold; ">else</span> <span style="color:#000084; font-weight:bold; ">if</span> (x &gt; 0) { <span style="color:#A00000; ">// p3</span>
+
+   <span style="color:#00ffff; ">// x: +</span>
+
+       x = x * (-10);     <span style="color:#A00000; ">// p4</span>
+
+   <span style="color:#00ffff; ">// x: -</span>
+
+   } 
+   <span style="color:#00ffff; ">// x: ?</span>
+
+   assert(x != 0); 
+</pre>
+<p>Like the previous example, the abstract value of x starts as ‘?’ and is set by interpreting conditionals and applying the abstract addition and multiplication operators. However, in this example, when the two program paths merge we have differing abstract values for x. We know that in one program path, the value of x is positive, and in the other program path, the value of x is negative. Thus, it is clear that the value is nonzero. Unfortunately, our abstract domain does not have an abstract value to represent that “the value could be + or -, but not 0”. Thus, when we merge, the abstract value of x is ‘?’. Although it is clear that the value of x will never be 0 when we reach the assertion, the analysis cannot prove that fact using this abstract domain. This provides some motivation for a more precise abstract domain.</p>
+<h4> Abstract Domain 2: Simple Powerset Sign Domain </h4>
+In addition to zero, minus, and plus, we introduce abstract values for >= 0 and <= 0. So, we have:
+<img src="/~edinella/images/image3.png" class=center> 
+<ul style="margin-top:70px; margin-bottom:100px">
+    <li> Zero (0), representing the integer value 0; </li>
+    <li> Minus (-), representing any negative integer value; </li>
+    <li> Plus (+), representing any positive integer value;</li>
+    <li> Non-Positive (-, 0), representing any non-positive integer value; </li>
+    <li> Non-Negative (0, +), representing any non-negative integer value; </li>
+    <li> Top (?), representing any integer value; and </li>
+    <li> Bottom (⊥), representing no integer value. </li>
+</ul>
+<p>Let us consider the following example to demonstrate the increase in precision from our previous abstract domain:</p>
+<pre style="color:#000000;background: #A0A0A0; max-width: 60%; float: left; padding: 20px; margin-right: 20px; margin-top: 20px">   <span style="color:#00ffff; ">// x: ? </span>
+
+   <span style="color:#000084; font-weight:bold; ">if</span> (x == 0) {       <span style="color:#A00000; ">// p1</span>
+
+   <span style="color:#00ffff; ">// x: 0</span>
+
+       x--;            <span style="color:#A00000; ">// p2</span>
+
+   <span style="color:#00ffff; ">// x: -</span>
+
+   } <span style="color:#000084; font-weight:bold; ">else</span> <span style="color:#000084; font-weight:bold; ">if</span> (x &lt; 0) { <span style="color:#A00000; ">// p3</span>
+
+   <span style="color:#00ffff; ">// x: -</span>
+
+       x = x + (-5);     <span style="color:#A00000; ">// p4</span>
+
+   <span style="color:#00ffff; ">// x: -</span>
+
+   } <span style="color:#000084; font-weight:bold; ">else</span> <span style="color:#000084; font-weight:bold; ">if</span> (x &gt; 0) { <span style="color:#A00000; ">// p5</span>
+
+   <span style="color:#00ffff; ">// x: +</span>
+
+       x = x * 0;  <span style="color:#A00000; ">// p6</span>
+
+   <span style="color:#00ffff; ">// x: 0</span>
+
+   }
+
+   <span style="color:#00ffff; ">// x: -,0</span>
+
+   assert(x &lt;= 0); 
+</pre>
+<p style="margin-top:30px; margin-bottom:30px">
+As usual, the abstract value of x begins as unknown and is set by interpreting conditionals and applying abstract operators. In this example, we introduce the abstract subtraction operator which can be defined as follows:
+<br />
+<br />
+<img src="/~edinella/images/image1.png" style="max-width:30%; display:block; margin-left:auto; margin-right:auto"> 
+<p>Since subtraction is not commutative, we designate each row as the left binary operand and each column as the right binary operand. The size of this matrix makes it clear that as our abstract domain becomes more precise, our computations become more complicated.</p>
+</p>
+<p>At program point <span style="color:#A00000; ">p2</span>, we subtract a positive value from 0, giving us the abstract value ‘-’. The rest of the abstract assignments follow as expected. When the analysis reaches the assertion, we again must merge the abstract values. Here, our values to merge are ‘-’, ‘-’, and ‘0’. Luckily, we can represent this in our abstract domain with the value ‘-, 0’. Thus, our analysis is able to prove the assertion (x &lt;= 0).</p>
+<p>It is clear that this abstract domain is more precise than our original example, but we still cannot represent a “nonzero” abstract value. Consider this simple example:</p>
+<pre style="color:#000000;background: #A0A0A0; max-width: 60%; float: left; padding: 20px; margin-right: 20px; margin-top: 20px"><span style="color:#00ffff; ">// x: ? </span>
+
+<span style="color:#000084; font-weight:bold; ">while</span> (x != 0) {       
+
+	<span style="color:#00ffff; ">// x: ?</span>
+}
+</pre>
+<p>Although it is quite clear to the reader that x will never be equal to zero at the assertion, we cannot represent this in our abstract domain, causing our analysis to raise a false alarm.</p>
+<h4> Abstract Domain 3: Enhanced Powerset Sign Domain </h4>
+<p>We introduce an even more precise domain by adding the abstract value ‘-, +’. So, we have:</p>
+<img src="/~edinella/images/image10.png" class=center> 
+<ul style="margin-top:70px; margin-bottom:100px">
+    <li> Zero (0), representing the integer value 0; </li>
+    <li> Minus (-), representing any negative integer value; </li>
+    <li> Plus (+), representing any positive integer value;</li>
+    <li> Non-Positive (-, 0), representing any non-positive integer value; </li>
+    <li> Non-Zero (-, +), representing any nonzero integer value; </li>
+    <li> Non-Negative (0, +), representing any non-negative integer value; </li>
+    <li> Top (?), representing any integer value; and </li>
+    <li> Bottom (⊥), representing no integer value. </li>
+</ul>
+<p>This domain can help us with our simple example above! After interpreting the conditional at
+<span style="color:#A00000; ">p1 </span>, we can represent the abstract value by ‘-, +’ and thereby enable the analysis to prove the assertion:</p>
+<pre style="color:#000000;background: #A0A0A0; max-width: 60%; float: left; padding: 20px; margin-right: 20px; margin-top: 20px"><span style="color:#00ffff; ">// x: ? </span>
+
+<span style="color:#000084; font-weight:bold; ">while</span> (x != 0) {       
+
+	<span style="color:#00ffff; ">// x: -,+ </span>
+}
+</pre>
+<p>This increase in precision, however, comes at an expense. As a domain becomes more precise, the abstract operators become more difficult to compute and the abstract states become more difficult to store. In large real-world programs, this can become problematic. Let us consider another abstract domain that greatly increases precision.</p>
+<h4> Abstract Domain 4: Interval Domain </h4>
+<img src="/~edinella/images/image2.png" class=center> 
+<p>In this domain, abstract values represent intervals and are of the form: [a1, a2]. If the abstract value for a variable x is [a1, a2] at program point P, then a1 &lt;= x &lt;= a2 holds true at P.</p>
+<p>This domain is notably different from the other abstract domains we have covered. Its height is not finite! It is possible to construct a sound abstraction with an infinite lattice, but the analysis designer must employ “<a href="https://www.cs.cmu.edu/~aldrich/courses/15-819O-13sp/resources/widening-collecting.pdf">widening</a>” to ensure convergence.</p>
+<p>The interval domain can be used to prove assertions about variables at the granularity of specific values. The following segment of code demonstrates a use case for static analysis with the interval domain.</p>
+<pre style="color:#000000;background: #A0A0A0; max-width: 60%;  padding: 20px; margin-right: 20px; margin-top: 20px">  x, y = 0, 0; 
+
+   <span style="color:#000084; font-weight:bold; ">while</span> (x != 100) {
+
+       x, y = x++, y++;
+
+   }
+
+   assert(x == 100);
+
+   assert(y == 100); 
+</pre>
+<h4 style="margin-bottom: 20px"> Abstract Domain 5: Difference-Bound Matricies </h4>
+<p>An abstract domain even more expressive than the interval domain is the <a href="https://www-apr.lip6.fr/~mine/publi/article-mine-padoII.pdf">DBM</a> domain. This domain is based on Difference-Bound Matrices and is a relational domain: it finds relationships between variables. More specifically, it finds relations between pairs of variables. Using this domain, a static analysis can discover invariants of the forms <span class=code> x - y &lt;= c </span>or +/- x &lt;= c, where and <span class=code>x </span>and <span class=code>y</span> are program variables and <span class=code>c</span> is an integer or real constant.  In contrast, the interval domain can only handle invariants of the form <span class=code>+/- x &lt;= c</span>.  Invariants of the form   <span class=code>x - y &lt;= c </span>are particularly useful for cases where there are unbounded loops.</p>
+<p>Consider for instance the following program:</p>
+<pre style="color:#000000;background: #A0A0A0; max-width: 60%;  padding: 20px; margin-right: 20px; margin-top: 20px">x = 0; 
+y = -3;
+
+<span style="color:#000084; font-weight:bold; ">while</span> (y &lt;= 0) {
+
+   <span style="color:#000084; font-weight:bold; ">if</span> (random()) { x = x + 1; }
+
+   y = y + 1;
+
+}
+
+assert(x - y &lt;= 3);
+</pre>
+<p>Using interval domain, the final intervals that we obtain are <span class=code>0 &lt;= x &lt;= 4 </span>and <span class=code>-3 &lt;= y &lt;= 0.</span> Graphically:</p>
+<img src="/~edinella/images/image7.png" style="max-width:30%; display:block; margin-left:auto; margin-right:auto"> 
+<p>To verify the assertion in this program, however, we need to establish the relational loop invariant <code>x - y &lt;= 3</code>. (Recall that a <em>loop invariant</em> is a condition that holds before and after each loop iteration.) We can achieve this using the DBM domain. It constructs a matrix called the Difference-Bound Matrix showing the relation between every pair of program variables. This matrix has a single row/column for each program variable. For the above program, which contains only two variables <span class=code>x</span> and <span class=code>y</span>, the matrix is as follows:</p>
+<img src="/~edinella/images/image12.png" style="display:block; margin-left:auto; margin-right:auto; max-width:80%"> 
+<p>We interpret such a matrix as defining relations of the form <span class=code>vj - vi &lt;= mij. </span>Thus, the relations defined by the above matrix are as follows:</p>
+<ul class=code>
+    <li>x - y <= 3</li>
+    <li>x <= 4</li>
+    <li>-x <= 0</li>
+    <li>-y <= 3</li>
+    <li>y <= 1</li>
+</ul>
+<img src="/~edinella/images/image8.png" style="display:block; margin-left:auto; margin-right:auto; max-width:80%"> 
+<h4>The ASTRÉE Analyzer and the Octagon Abstract Domain</h4>
+<p>Abstraction is a powerful technique to allow efficient analysis. However, program analysis is undecidable. It is not possible to create an analysis for a Turing-complete language that is sound, complete, and guarantees termination.</p>
+<p>Patrick and Radhia Cusot, originators of <a href="https://www.di.ens.fr/~cousot/AI/">Abstract Interpretation</a>, began developing <a href="https://hal.archives-ouvertes.fr/hal-00084293/document">the ASTRÉE static analyzer</a> in 2001 with the goal of creating a static analysis that is sound, complete, and guaranteed to terminate. ASTRÉE can be applied to large C programs without any false alarms under certain conditions, described below.</p>
+<h5> What is ASTRÉE? </h5>
+<p>ASTRÉE is designed to prove the absence of runtime errors such as divide-by-zero, array index out-of-bounds, integer overflow, and assertion failures. As we know, proving such properties about programs is undecidable. ASTRÉE limits users to a subset of the C language to ensure completeness and termination. This subset excludes union types, dynamic memory allocation, unbounded recursive function calls, backward branching, conflicting side effects and the use of C libraries. However, this cost comes with the great reward of runtime-safe C programs. In safety critical systems, ASTRÉE is particularly appealing. The airline manufacturer Airbus uses ASTRÉE to ensure runtime safety of C programs.</p>
+<p>ASTRÉE began as a simple memory model in conjunction with an interval abstraction. The memory model contained abstract states to represent single or multiple concrete memory locations. On the other hand, the interval abstraction domain represented the numeric ranges a variable could hold. As the project progressed, the developers designed and combined many other abstractions to create a multi-abstraction analysis with an acceptable ratio between efficiency and precision.</p>
+<p>A particularly interesting abstract domain that ASTRÉE employs is the <em>octagon domain</em>. It is another relational domain that finds relationships between variables. It is able to represent conjunctions in the form <span class=code>+/- x +/- y &lt;= c</span> where <span class=code>x</span> and <span class=code>y</span> are program variables and <span class=code>c</span> is a constant. Consider the following example:</p>
+<pre style="color:#000000;background: #A0A0A0;  padding: 20px; margin-right: 20px; margin-top: 20px">x = 10;
+
+y = 0;
+
+<span style="color:#000084; font-weight:bold; ">while</span> (x &gt;= 0) {
+
+   x = x - 1;
+
+   <span style="color:#000084; font-weight:bold; ">if</span> random() { y = y + 1; }
+
+}
+
+assert(y &lt;= 11);
+</pre>
+<p>In order to prove the assertion <span class=code>y &lt;= 11</span>, it is first necessary to prove the relational loop invariant <span class=code>y + x &lt;= 10</span>. Combined with the loop exit condition, <span class=code>x == -1</span>, we can now prove that <span class=code>y &lt;= 11</span>. An example octagon domain is shown below.</p>
+<img src="/~edinella/images/image9.png" style="display:block; margin-left:auto; margin-right:auto; max-width:80%"> 
+<p>In conclusion, increasingly powerful abstract domains can prove increasingly complex assertions but come at a higher cost. By balancing these tradeoffs, the designer can create a sound, precise, and efficient analysis tailored to their use cases.</p>
+<h4>Numerical Abstract Domains in the IKOS Analyzer</h4></a>
+<a href="https://github.com/NASA-SW-VnV/ikos">IKOS</a>  is an open-source static analyzer by NASA. It targets C/C++ programs based on LLVM IR and uses the theory of Abstract Interpretation to prove the absence of runtime errors. It provides a rich variety of numerical abstract domains, including the interval, DBM, and octagon domains discussed in this article.
+<h4> Acknowledgements </h4>
+<p>Contributions on Difference-Bound Matricies by <a href="https://www.linkedin.com/in/aaditya-naik/">Aaditya Naik</a></p>
+<p>Some of the examples in this article are based on material from Ahmed Rezine’s <a href="https://www.ida.liu.se/~TDDC90/literature/slides/TDDC90_static_I_handout.pdf">lecture on static analysis.</a></p>
+
+    </div>
+    <div class="post-footer">
+      <div class="info">
+        
+        
+      </div>
+    </div>
+
+    
+</div>
+
+
+                </div>
+            </div>
+        </div>
+</body>
+
+
+
+<script type="text/javascript" src="https://www.seas.upenn.edu/~edinella/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js" integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw=" crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript" src="https://www.seas.upenn.edu/~edinella/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js" integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://www.seas.upenn.edu/~edinella/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js" integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro=" crossorigin="anonymous"></script></html></body>
+
+</html>

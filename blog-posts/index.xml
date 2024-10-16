@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog-posts on Elizabeth Dinella</title>
+    <link>https://www.seas.upenn.edu/~edinella/blog-posts/</link>
+    <description>Recent content in Blog-posts on Elizabeth Dinella</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 07 Sep 2021 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.seas.upenn.edu/~edinella/blog-posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Queries over Incomplete Knowledge Bases</title>
+      <link>https://www.seas.upenn.edu/~edinella/blog-posts/knowledge-bases/</link>
+      <pubDate>Tue, 07 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.seas.upenn.edu/~edinella/blog-posts/knowledge-bases/</guid>
+      <description>General background knowledge about the world is a significant component in many AI systems.</description>
+    </item>
+    
+    <item>
+      <title>Testing Classes and Libraries with Randoop</title>
+      <link>https://www.seas.upenn.edu/~edinella/blog-posts/randoop/</link>
+      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.seas.upenn.edu/~edinella/blog-posts/randoop/</guid>
+      <description>Tests are an important and valuable part of the software development cycle.</description>
+    </item>
+    
+    <item>
+      <title>Program Abstractions</title>
+      <link>https://www.seas.upenn.edu/~edinella/blog-posts/programabstractions/</link>
+      <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.seas.upenn.edu/~edinella/blog-posts/programabstractions/</guid>
+      <description>Any non-trivial semantic property that we may wish to check about programs is undecidable.</description>
+    </item>
+    
+    <item>
+      <title>A Whirlwind Tour of C&#43;&#43;</title>
+      <link>https://www.seas.upenn.edu/~edinella/blog-posts/c&#43;&#43;-tour/</link>
+      <pubDate>Tue, 07 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.seas.upenn.edu/~edinella/blog-posts/c&#43;&#43;-tour/</guid>
+      <description>C++ was originally created in the 1980s as an extension of the C language to add support for classes.</description>
+    </item>
+    
+    <item>
+      <title>Automatically Refactoring Typescript Promise Code</title>
+      <link>https://www.seas.upenn.edu/~edinella/blog-posts/typescript-refactor/</link>
+      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.seas.upenn.edu/~edinella/blog-posts/typescript-refactor/</guid>
+      <description>This feature allows the Typescript language service to automatically refactor code that uses Promise methods such as .</description>
+    </item>
+    
+    <item>
+      <title>A Common AST for Multi-Language Analysis on Submitty</title>
+      <link>https://www.seas.upenn.edu/~edinella/blog-posts/common-ast/</link>
+      <pubDate>Thu, 10 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.seas.upenn.edu/~edinella/blog-posts/common-ast/</guid>
+      <description>As computer science becomes an increasingly popular field of study, introductory classes grow accordingly.</description>
+    </item>
+    
+    <item>
+      <title>Microsoft Graph Explorer</title>
+      <link>https://www.seas.upenn.edu/~edinella/blog-posts/ms-graph-explorer/</link>
+      <pubDate>Mon, 15 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.seas.upenn.edu/~edinella/blog-posts/ms-graph-explorer/</guid>
+      <description>Microsoft Graph provides a unified endpoint to interact with data in Microsoft services such as Azure Active Directory, Office 365 services, Enterprise Mobility and Security services, Windows 10 services, Dynamics 365, and more.</description>
+    </item>
+    
+  </channel>
+</rss>
