@@ -287,7 +287,7 @@ This illustrates one of the weaknesses of line coverage. The else branch is not 
 Next, let’s take a look at the if-statement on lines 18 which is also highlighted in yellow. If you hover over the condition, you’ll see that jacoco reports 2 out of 4 branches are covered. Take a minute to consider what those 4 branches might be. <br> <br>
 
 1. <b> <code> customerAge < 65 and customerAge >= 18 </code> </b> <br>
-&emsp; In this case, the condition evaluates to FALSE. The first two test cases we provided test this branch
+&emsp; In this case, the condition evaluates to FALSE. <br> &emsp; The first two test cases we provided test this branch <br>
 2. <b> <code> customerAge >= 65 and customerAge >= 18 </code> </b> <br>
 &emsp; This case represents the senior citizen discount and is executed with the third test case you added. 
 <br>
