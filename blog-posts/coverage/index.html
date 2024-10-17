@@ -291,7 +291,7 @@ In this case, the condition evaluates to FALSE. <br> The first two test cases we
 <b> 2. <code> customerAge >= 65 and customerAge >= 18 </code> </b> <br>
 This case represents the senior citizen discount and is executed with the third test case you added. 
 
-<br>
+<br> <br>
 The next two branches are NOT covered by our current test suite. <br>
 <b> 1. <code> customerAge < 65 and customerAge < 18 </code> </b> <br>
 This case represents a discount for minors. There does not yet exist a test case for this in our suite. <br>
@@ -299,6 +299,7 @@ This case represents a discount for minors. There does not yet exist a test case
 
 Great! Now we’ve increased our branch coverage, but we’re still missing one branch. Think about what case that might be.. <br>
 
+<br>
 <b> 2.<code> customerAge >= 65 and customerAge < 18 </code> </b>
 This case represents when both predicates in our or condition evaluate to TRUE. However, this is impossible! There is no possible integer value for customerAge which is >= 65 AND less than 18. We call this case infeasible. Branch infeasibility is a common occurrence, and in general is very difficult to statically predict. 100% branch coverage is not always possible. 
 
