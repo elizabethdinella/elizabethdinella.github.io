@@ -273,9 +273,10 @@ Now, let's explore other coverage metrics and examine how effectively they corre
 </p>
 
 <p>
-Let’s go back to our generated coverage report and inspect branch coverage. Reopen the index.html in your browser. The third column should report 50% branch coverage (3 out of 6 possible branches). Click on the BuyTicket.java element in the first column to bring up the colored visualization: 
+Let’s go back to our generated coverage report and inspect branch coverage. Reopen the index.html in your browser. The third column should report 50% branch coverage (3 out of 6 possible branches). Click on the BuyTicket.java element in the first column to bring up the colored visualization: <br> <br>
 
 <img src="../../images/coverage/branch-cov.png" width="100%" />
+<br> <br>
 
 Notice that both if statements in our source code are highlighted yellow. If you hover over the first if-statement on line 16, it states that 1 of 2 branches are missed. This makes sense because all three of our test cases include membership discounts. The else non-member case is never executed. 
 
