@@ -287,14 +287,15 @@ This illustrates one of the weaknesses of line coverage. The else branch is not 
 Next, let’s take a look at the if-statement on lines 18 which is also highlighted in yellow. If you hover over the condition, you’ll see that jacoco reports 2 out of 4 branches are covered. Take a minute to consider what those 4 branches might be. <br> <br>
 
 <b> 1.  <code> customerAge < 65 and customerAge >= 18 </code> </b> <br>
-&emsp; In this case, the condition evaluates to FALSE. <br> &emsp; The first two test cases we provided test this branch <br>
+In this case, the condition evaluates to FALSE. <br> The first two test cases we provided test this branch <br>
 <b> 2. <code> customerAge >= 65 and customerAge >= 18 </code> </b> <br>
-&emsp; This case represents the senior citizen discount and is executed with the third test case you added. 
+This case represents the senior citizen discount and is executed with the third test case you added. 
+
 <br>
 The next two branches are NOT covered by our current test suite. <br>
 <b> 1. <code> customerAge < 65 and customerAge < 18 </code> </b> <br>
-This case represents a discount for minors. There does not yet exist a test case for this in our suite. 
-&emsp; <b>Exercise:</b> let’s go ahead and add one that finds the bug! To trigger it, we’ll need a customerAge of under 18 and an assertion that specifies the correct ticket price. <br>
+This case represents a discount for minors. There does not yet exist a test case for this in our suite. <br>
+<b>Exercise:</b> let’s go ahead and add one that finds the bug! To trigger it, we’ll need a customerAge of under 18 and an assertion that specifies the correct ticket price. <br> <br>
 
 Great! Now we’ve increased our branch coverage, but we’re still missing one branch. Think about what case that might be.. <br>
 
