@@ -305,12 +305,32 @@ This case represents when both predicates in our or condition evaluate to TRUE. 
 
 </p>
 
+<h4> Covering More Coverage Metrics: Statements, Edges, and Paths </h4>
+
+<p>
+There are many other coverage metrics beyond line and branch coverage that we can explore. One common metric is <b>statement coverage</b>.Statement coverage is similar to line coverage, but a bit more fine grained. A <i>Statement</i> in Java is the most basic unit of execution that performs an action. The following are examples of statements in Java: <br>
+&emsp; - Declarations: int x = 100; <br>
+&emsp; Assignments: x = 15; <br>
+&emsp; Expression statements: System.out.println(“Hello world!”); <br>
+&emsp; Conditional statements: if (isMember) discountRate += .10;  <br> <br>
+Statements are typically terminated with a semicolon. Programmers <i>usually</i> put one statement on each line, but this is not always the case. For example, the following code has two statements, but only one line. <br>
+&emsp; <code> int x= 10; System.out.println(x); </code> <br>
+A statement coverage metric would consider these two statements separately while a line coverage metric would not. 
+</p>
+
+<p>
+A stronger and perhaps a more interesting metric is <b>Path Coverage</b>. Path coverage aims to ensure that all possible paths through a program's control flow are executed at least once during testing. 
+
+</p>
+
 
     </div>
     <div class="post-footer">
       <div class="info">
-        
-        
+          Elizabeth Dinella
+          Assistant Professor
+          Department of Computer Science 
+          Bryn Mawr College 
       </div>
     </div>
 
