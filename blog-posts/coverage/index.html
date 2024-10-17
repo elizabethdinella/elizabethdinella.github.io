@@ -249,7 +249,7 @@ In this reading, I will discuss different types of coverage metrics, but for now
 
 <p>
 Line 19 is marked in red indicating that it was not covered. This makes sense because in our two tests, the customer ages were 28 and 31 which do not qualify for an age discount and the if-statement on line 18 evaluates to false. 
-</p> <br>
+</p> 
 <p>
 Line 1 is also marked in red, but we can ignore this for now since we are testing the BuyTicket method instead of the class. (we will learn more about object oriented testing later in the course).  
 </p>
@@ -258,7 +258,7 @@ Line 1 is also marked in red, but we can ignore this for now since we are testin
 <b> Exercise: </b>  add an additional test for a senior citizen discount to increase total coverage. A customer who is 70 years old and a member should incur a discount of 20% on a day-of ticket purchase with a base price of $150. Write this case as a JUnit test and add it to the test/TestBuyTicket file.
 </p>
 
-<br> <br>
+<br> 
 <p>
 Now, when we re-run the run_coverage script, our report should reflect that we have covered line 19. No lines in the calculatePrice method should be highlighted in red. Congrats! Your test suite has covered 100% of lines in this method. 
 </p>
