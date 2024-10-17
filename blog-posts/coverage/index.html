@@ -233,7 +233,7 @@ Run bash <a href="https://github.com/elizabethdinella/code-coverage/blob/main/ru
 </p>
 <br> <br>
 
-<img src="../../images/coverage/summary.png" class=center width="75%">
+<img src="../../images/coverage/summary.png" class=center width="75%" />
 
 <br> <br> 
 
@@ -243,7 +243,7 @@ In this reading, I will discuss different types of coverage metrics, but for now
 
 <br> <br>
 
-<img src="../../images/coverage/line-cov.png" class=center width=400>
+<img src="../../images/coverage/line-cov.png" width="900" />
 
 <br> <br> 
 
@@ -263,7 +263,13 @@ Line 1 is also marked in red, but we can ignore this for now since we are testin
 Now, when we re-run the run_coverage script, our report should reflect that we have covered line 19. No lines in the calculatePrice method should be highlighted in red. Congrats! Your test suite has covered 100% of lines in this method. 
 </p>
 
+<p> 
+Code coverage can be measured in various ways, each relating to the coverage of different program elements. The coverage metric we just explored is called <b> line coverage </b>, which measures the number of lines executed divided by the total number of lines in the method under test. Even with 100% line coverage, certain bugs may still go undetected, as illustrated by our example. While all tests may pass, the bugs remain unfound! This emphasizes that while line coverage is useful for pinpointing untested areas of your code, it doesn't guarantee that all bugs have been identified.
+</p>
+
 <h4> Beyond Covering Lines </h4>
+
+
 
 
 
