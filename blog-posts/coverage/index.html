@@ -284,7 +284,7 @@ Notice that both if statements in our source code are highlighted yellow. If you
 
 This illustrates one of the weaknesses of line coverage. The else branch is not explicitly written as a seperate line of code and thus is not measured seperately in the line coverage metric. To achieve 100% line coverage, we only needed to include cases which execute the isMember == true case. Branch coverage accounts for this discrepancy. The metric requires the test code to execute both the member and non-member cases to achieve 100% branch coverage. 
 
-Next, let’s take a look at the if-statement on lines 18 which is also highlighted in yellow. If you hover over the condition, you’ll see that jacoco reports 2 out of 4 branches are covered. Take a minute to consider what those 4 branches might be. 
+Next, let’s take a look at the if-statement on lines 18 which is also highlighted in yellow. If you hover over the condition, you’ll see that jacoco reports 2 out of 4 branches are covered. Take a minute to consider what those 4 branches might be. <br> <br>
 
 1. <b> <code> customerAge < 65 and customerAge >= 18 </code> </b> <br>
 &emsp; In this case, the condition evaluates to FALSE. The first two test cases we provided test this branch
