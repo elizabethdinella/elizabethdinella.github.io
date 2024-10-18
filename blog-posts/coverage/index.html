@@ -329,15 +329,15 @@ If that was difficult for you to parse, you're not alone! Denoting a program pat
 To visualize all possible paths more naturally, we can represent code as a <b> Control Flow Graph (CFG)</b>. A CFG is a directed graph with each node representing groups of one or statements and edges representing flows between them. 
 
 Consider the CFG for calculatePrice: <br>
-<img src="../../images/coverage/cfg.png" class="center">
+<img src="../../images/coverage/cfg.png" width="75%">
 <br> <br>
 
 The path for testWeekInAdvance can now be easily represented as a path through the CFG: <br>
-<img src="../../images/coverage/cfg-path.png" class="center">
+<img src="../../images/coverage/cfg-path.png" class="75%">
 
 This is your first insight into how different program representations offer distinct advantages for analysis. It might not be obvious what all the possible paths are while looking at the source code, but a control flow graph clearly shows this. <br>
 
-The last metric I will introduce is <b>Edge Coverage</b>, which aims to ensure that each <i>edge</i> in the CFG is executed at least once during testing. Edge coverage operates on the CFG, but is weaker than path coverage. 
+The last metric I will introduce is <b>Edge Coverage</b>, which aims to ensure that each <i>edge</i> in the CFG is executed at least once during testing. Edge coverage operates on the CFG, but is weaker than path coverage. <br> <br>
  
 To solidify your understanding of path coverage, consider the following questions: <br>
 1. What percent path coverage does our test suite currently achieve? What about edge coverage? <br>
