@@ -341,11 +341,12 @@ This an example of how different program representations offer distinct advantag
 The last metric I will introduce is <b>Edge Coverage</b>, which aims to ensure that each <i>edge</i> in the CFG is executed at least once during testing. Edge coverage operates on the CFG, but is weaker than path coverage. <br> <br>
  
 To solidify your understanding of path coverage, consider the following questions: <br>
-1. What percent path coverage does our test suite currently achieve? What about edge coverage? <br>
-2. What tests would we need to add to achieve 100% path coverage? <br>
-3. How many paths does a program have? What is the relationship between the number of paths in a program and the number of branches? <br>
-4. How would the CFG of a program with a loop look? What about a the CFG for a program with recursion? Does your path calculation from the previous question still hold? <br> 
-5. How are statements grouped to form nodes in the CFG? (hint: lookup basic blocks) <br> <br>
+1. On line 18, the nubmer of branches reported by Jacoco is 4, but it is a single if-statement. Why are there 4 branches instead of 2? Hint: Jacoco works at the bytecode level. <br>
+2. What percent path coverage does our test suite currently achieve? What about edge coverage? <br>
+3. What tests would we need to add to achieve 100% path coverage? <br>
+4. How many paths does a program have? What is the relationship between the number of paths in a program and the number of branches? <br>
+5. How would the CFG of a program with a loop look? What about a the CFG for a program with recursion? Does your path calculation from the previous question still hold? <br> 
+6. How are statements grouped to form nodes in the CFG? (hint: lookup basic blocks) <br> <br>
 
 </p>
 
