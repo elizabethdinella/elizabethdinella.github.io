@@ -295,7 +295,7 @@ This case represents the senior citizen discount and is executed with the third 
 The next two branches are NOT covered by our current test suite. <br>
 <b> 1. <code> customerAge < 65 and customerAge < 18 </code> </b> <br>
 This case represents a discount for minors. There does not yet exist a test case for this in our suite. <br>
-<b>Exercise:</b> let’s go ahead and add one that finds the bug! To trigger it, we’ll need a customerAge of under 18 and an assertion that specifies the correct ticket price. <br> <br>
+<b>Exercise:</b> let’s go ahead and add one that finds the bug! To trigger it, we’ll need a customerAge of under 18 and an assertion that specifies the correct ticket price. Assume the buyer is a member. <br> <br>
 
 Great! Now we’ve increased our branch coverage, but we’re still missing one branch. Think about what case that might be.. <br>
 
@@ -336,7 +336,7 @@ The path for testWeekInAdvance can now be easily represented as a path through t
 <img src="../../images/coverage/cfg-path.png" width="75%" />
 <br> <br>
 
-This is your first insight into how different program representations offer distinct advantages for analysis. It might not be obvious what all the possible paths are while looking at the source code, but a control flow graph clearly shows this. <br>
+This an example of how different program representations offer distinct advantages for analysis. It might not be obvious what all the possible paths are while looking at the source code, but a control flow graph clearly shows this. <br>
 
 The last metric I will introduce is <b>Edge Coverage</b>, which aims to ensure that each <i>edge</i> in the CFG is executed at least once during testing. Edge coverage operates on the CFG, but is weaker than path coverage. <br> <br>
  
@@ -351,6 +351,15 @@ To solidify your understanding of path coverage, consider the following question
 
 <p>
 Before we conclude, draw your attention to BUG 1: a division by zero that is triggered with a basePrice of $100. Even with a test suite the most achieves coverage of every feasible path, this fault may go undetected. Testing different input values which do not affect program flow is also important for high quality test suites. 
+</p>
+
+<p>
+<b> For CS383 Students:</b> please sumbmit the following files on Gradescope.
+<ol>
+    <li> File with answers to the above questions. </li>
+    <li> TestBuyTicket.java </li>
+</ol>
+
 </p>
 
 
