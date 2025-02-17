@@ -108,7 +108,7 @@
 
     <p>Tests are an important and valuable part of the software development cycle. However, it can be difficult and time consuming to write an extensive unit test suite for an entire library. Furthermore, random testing is sufficient for security testing of an entire system, but is not well suited for unit tests. Unit tests are designed to test a small component or unit such as a single method. Random testing has significant shortcomings in testing methods that take structured data as input. Recall that fuzzers create random sequences of bytes to feed to an input program. The chances of a random sequence producing a valid structured data type as an argument is <em>extremely</em> low. Using random testing to inspect a single unit would be inefficient as most inputs would be immediately thrown away as invalid.</p>
 <p>Randoop, the Random Tester for Object-Oriented Programs, is better suited for testing Java units such as methods, classes, and libraries. Randoop is an automated test generation tool that generates sequences of valid method calls and checks for violations in invariants such as the reflexive property of equality. That is, an object should always be equal to itself. Randoop can also check for violations in custom written invariants and pre/post conditions.</p>
-<p>The details of the Randoop algorithm are left to the Automated Test Generation Module. In this reading, we will present a walkthrough of running Randoop on a Java Graphing Library. To follow along, you can download the necessary files <a href="/randoop.zip">here</a>.</p>
+<p>In this reading, we will present a walkthrough of running Randoop on a Java Graphing Library. To follow along, you can download the necessary files <a href="/randoop.zip">here</a>.</p>
 <p>We will use Randoop to generate error-revealing test cases for the Java library,
 analyze these test cases to find errors in the source code, fix them, and verify that the errors
 have been corrected with successive iterations of the tool.</p>
@@ -122,17 +122,17 @@ Parabola
 Point
 Vector
 </code></pre><p>Now we are ready to use Randoop! Generate tests using the following command:</p>
-<pre><code>$ java -classpath {my_dir}:./randoop-all-3.0.8.jar randoop.main.Main gentests --classlist=myclasses.txt --no-regression-tests=true
-</code></pre><p>Specifying the location of resources needed to run Randoop can be tricky. The easiest way to accomplish this is to run the command to execute Randoop in the directory where you downloaded the library source code with the classpath option.</p>
+<pre><code>$ java -cp {my_dir}:./randoop-all-3.0.8.jar randoop.main.Main gentests --classlist=myclasses.txt --no-regression-tests=true
+</code></pre><p>Specifying the location of resources needed to run Randoop can be tricky. The easiest way to accomplish this is to run the command to execute Randoop in the directory where you downloaded the library source code with the cp option.</p>
 <p>You should see <code>ErrorTest*.Java</code> files containing the failing test cases. Let’s open <code>ErrorTest0.Java</code> to see the failing method sequences Randoop has generated.</p>
 <p>Of course, Randoop is randomized, so each reader’s <code>ErrorTest</code> file may look different. However, you should see failing test cases regarding the reflexivity and transitivity of equals on various library objects.</p>
 <p>Let’s compile and run these tests to see the crashes.</p>
 <p>Compile the tests using the following command:</p>
-<pre><code>$ javac -classpath .:{my_dir}/junit-4.12.jar ErrorTest*.java -sourcepath .:{my_dir}
+<pre><code>$ javac -cp .:{my_dir}/junit-4.12.jar ErrorTest*.java -sourcepath .:{my_dir}
 </code></pre><p>In order to run the tests, it makes things easier to create an environment variable to refer to the necessary jar files:</p>
 <pre><code>$ export JUNITPATH=junit-4.12.jar:hamcrest-core-1.3.jar
 </code></pre><p>Now, we are ready to run the failing test cases:</p>
-<pre><code>$ java -classpath .:$JUNITPATH:{my_dir} org.junit.runner.JUnitCore ErrorTest
+<pre><code>$ java -cp .:$JUNITPATH:{my_dir} org.junit.runner.JUnitCore ErrorTest
 </code></pre><p>You should see various errors including Class Cast Exceptions, and Null Pointer Exceptions. Each of these failing test cases should have a stack trace specifying the location in the corresponding library files.</p>
 <p>Let’s inspect the stack traces and fix some of these errors.</p>
 <p>Randoop generates sequences of methods using a feedback loop. It starts with a short sequence and continues to expand with method calls from the input class in each iteration. If the sequence is illegal or redundant it is thrown away and not expanded upon. So, it makes sense to start fixing errors with the smallest sequence first.</p>
@@ -178,10 +178,10 @@ Vector
 </pre>
 <p>Let’s recompile <code>Line.java</code> and run Randoop again to generate new test cases:</p>
 <pre><code>$javac Line.java 
-$java -classpath {my_dir}:./randoop-all-3.0.8.jar randoop.main.Main gentests --classlist=myclasses.txt --no-regression-tests=true
+$java -cp {my_dir}:./randoop-all-3.0.8.jar randoop.main.Main gentests --classlist=myclasses.txt --no-regression-tests=true
 </code></pre><p>Now that we have new <code>ErrorTest*.java</code> files, let’s compile them and run them to inspect the crashing stack traces:</p>
-<pre><code>$ javac -classpath .:{my_dir}/$JUNITPATH ErrorTest*.java -sourcepath .:{my_dir}
-$ java -classpath .:$JUNITPATH:{my_dir} org.junit.runner.JUnitCore ErrorTest
+<pre><code>$ javac -cp .:{my_dir}/$JUNITPATH ErrorTest*.java -sourcepath .:{my_dir}
+$ java -cp .:$JUNITPATH:{my_dir} org.junit.runner.JUnitCore ErrorTest
 </code></pre><p>Note that by fixing the bug in the <code>Line</code> constructor, the number of failing test cases dropped from 340 to 273.</p>
 <p>In our second run of Randoop, the first failing test, <code>test001</code>, is:</p>
 <pre style="color:#d1d1d1;background:#000000;"><span style="color:#e66170; font-weight:bold; ">public</span> void test001() <span style="color:#e66170; font-weight:bold; ">throws</span> Throwable <span style="color:#b060b0; ">{</span>
@@ -233,9 +233,9 @@ This error is more subtle and requires some digging. In particular, take a minut
 <p>We should also take care to consider the case in which both points are null. In this case, the <code>equals</code> function should not return false. Add a condition to ensure this case is handled properly.</p>
 <p>Once you’ve fixed the bug, recompile <code>Line.java</code>, rerun Randoop, and compile and run the crashing test cases.</p>
 <pre style="color:#d1d1d1;background:#000000;">$javac Line<span style="color:#d2cd86; ">.</span>java 
-$java <span style="color:#d2cd86; ">-</span>classpath <span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span><span style="color:#d2cd86; ">:</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">/</span>randoop<span style="color:#d2cd86; ">-</span>all<span style="color:#d2cd86; ">-</span><span style="color:#009f00; ">3.0</span><span style="color:#d2cd86; ">.</span><span style="color:#009f00; ">8.</span>jar randoop<span style="color:#d2cd86; ">.</span>main<span style="color:#d2cd86; ">.</span>Main gentests <span style="color:#d2cd86; ">-</span><span style="color:#d2cd86; ">-</span>classlist<span style="color:#d2cd86; ">=</span>myclasses<span style="color:#d2cd86; ">.</span>txt <span style="color:#d2cd86; ">-</span><span style="color:#d2cd86; ">-</span>no<span style="color:#d2cd86; ">-</span>regression<span style="color:#d2cd86; ">-</span>tests<span style="color:#d2cd86; ">=</span><span style="color:#e66170; font-weight:bold; ">true</span>
-$javac <span style="color:#d2cd86; ">-</span>classpath <span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">:</span><span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span><span style="color:#d2cd86; ">/</span>$JUNITPATH ErrorTest<span style="color:#d2cd86; ">*</span><span style="color:#d2cd86; ">.</span>java <span style="color:#d2cd86; ">-</span>sourcepath <span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">:</span><span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span>
-$java <span style="color:#d2cd86; ">-</span>classpath <span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">:</span>$JUNITPATH<span style="color:#d2cd86; ">:</span><span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span> org<span style="color:#d2cd86; ">.</span>junit<span style="color:#d2cd86; ">.</span>runner<span style="color:#d2cd86; ">.</span>JUnitCore ErrorTest
+$java <span style="color:#d2cd86; ">-</span>cp <span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span><span style="color:#d2cd86; ">:</span><span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">/</span>randoop<span style="color:#d2cd86; ">-</span>all<span style="color:#d2cd86; ">-</span><span style="color:#009f00; ">3.0</span><span style="color:#d2cd86; ">.</span><span style="color:#009f00; ">8.</span>jar randoop<span style="color:#d2cd86; ">.</span>main<span style="color:#d2cd86; ">.</span>Main gentests <span style="color:#d2cd86; ">-</span><span style="color:#d2cd86; ">-</span>classlist<span style="color:#d2cd86; ">=</span>myclasses<span style="color:#d2cd86; ">.</span>txt <span style="color:#d2cd86; ">-</span><span style="color:#d2cd86; ">-</span>no<span style="color:#d2cd86; ">-</span>regression<span style="color:#d2cd86; ">-</span>tests<span style="color:#d2cd86; ">=</span><span style="color:#e66170; font-weight:bold; ">true</span>
+$javac <span style="color:#d2cd86; ">-</span>cp <span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">:</span><span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span><span style="color:#d2cd86; ">/</span>$JUNITPATH ErrorTest<span style="color:#d2cd86; ">*</span><span style="color:#d2cd86; ">.</span>java <span style="color:#d2cd86; ">-</span>sourcepath <span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">:</span><span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span>
+$java <span style="color:#d2cd86; ">-</span>cp <span style="color:#d2cd86; ">.</span><span style="color:#d2cd86; ">:</span>$JUNITPATH<span style="color:#d2cd86; ">:</span><span style="color:#b060b0; ">{</span>my_dir<span style="color:#b060b0; ">}</span> org<span style="color:#d2cd86; ">.</span>junit<span style="color:#d2cd86; ">.</span>runner<span style="color:#d2cd86; ">.</span>JUnitCore ErrorTest
 </pre>
 <p>Note that by fixing the bug in <code>Line.equals</code> the number of crashing test cases created by Randoop was reduced from 273 to 29.</p>
 <p>In our third run of Randoop, the first failing test, <code>test01</code>, is:</p>
@@ -318,7 +318,7 @@ $java <span style="color:#d2cd86; ">-</span>classpath <span style="color:#d2cd86
 </pre>
 <p>Once you’ve found the bug, fix it so the method returns the correct <code>hashCode</code>.</p>
 <p>Now, let’s execute Randoop with a final long running iteration to confirm there are no additional bugs to be found. You can specify a time limit in seconds using the <code>--timelimit</code> option. Here, we choose five minutes as a conservative limit.</p>
-<pre><code>$java -classpath {my_dir}:./randoop-all-3.0.8.jar randoop.main.Main gentests --classlist=myclasses.txt --no-regression-tests=true --timelimit=300
+<pre><code>$java -cp {my_dir}:./randoop-all-3.0.8.jar randoop.main.Main gentests --classlist=myclasses.txt --no-regression-tests=true --timelimit=300
 </code></pre><p>After five minutes, Randoop should report there are “No error-revealing tests to output”.</p>
 <p>In summary, Randoop can be used to automatically generate unit test cases to test important properties. These properties can be default intrinsic properties such as the ones we tested in this article, or user specified invariants. Randoop reduces the burden on the developer to create high quality unit tests. Imagine how many test cases we would have had to write to obtain this level of coverage! Furthermore, when testing small units that take structured input as data, Randoop provides a superior technique to randomized testing. Because of this, Randoop is a useful tool used in industry at companies such as ABB, Microsoft, and on many open-source projects.</p>
 
