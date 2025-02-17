@@ -122,7 +122,7 @@ Parabola
 Point
 Vector
 </code></pre><p>Now we are ready to use Randoop! Generate tests using the following command:</p>
-<pre><code>$ java -cp {my_dir}:./randoop-all-3.0.8.jar randoop.main.Main gentests --classlist=myclasses.txt --no-regression-tests=true
+<pre><code>$ java -cp .:randoop-all-4.3.3.jar randoop.main.Main gentests --classlist=myclasses.txt --no-regression-tests=true
 </code></pre><p>Specifying the location of resources needed to run Randoop can be tricky. The easiest way to accomplish this is to run the command to execute Randoop in the directory where you downloaded the library source code with the cp option.</p>
 <p>You should see <code>ErrorTest*.Java</code> files containing the failing test cases. Let’s open <code>ErrorTest0.Java</code> to see the failing method sequences Randoop has generated.</p>
 <p>Of course, Randoop is randomized, so each reader’s <code>ErrorTest</code> file may look different. However, you should see failing test cases regarding the reflexivity and transitivity of equals on various library objects.</p>
